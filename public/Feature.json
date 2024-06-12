@@ -2,51 +2,46 @@
     {
         "title": "Join Study Groups",
         "description": "Create study groups for specific subjects, courses, or topics. Join existing study groups to collaborate with peers who share your academic interests.",
-        "imageURL": "https://i.postimg.cc/YCq0pVGt/noun-group-737662.png"
+        "imageURL": "https://i.postimg.cc/7hFM22cn/group-Study.jpg"
     },
     {
         "title": "Live Video Sessions",
         "description": "Host live video study sessions within your study groups for real-time collaboration. Use video conferencing to interact face-to-face, ask questions, and work through problems together.",
-        "imageURL": "https://example.com/live_video_sessions.png"
+        "imageURL": "https://i.postimg.cc/nVqvR0sn/live-class.jpg"
     },
     {
-        "title": "Shared Documents and Resources",
+        "title": "Shared File & Resources",
         "description": "Upload and share documents, presentations, and study materials with your study group members. Collaborate on projects, review notes, and provide feedback effortlessly.",
-        "imageURL": "https://example.com/shared_documents_and_resources.png"
+        "imageURL": "https://i.postimg.cc/NGPZfGsN/shared-document.jpg"
     },
     {
         "title": "Discussion Boards and Forums",
         "description": "Engage in discussions with fellow students on dedicated discussion boards and forums. Ask questions, share insights, and exchange study tips and resources to enhance your learning experience.",
-        "imageURL": "https://example.com/discussion_boards_and_forums.png"
+        "imageURL": "https://i.postimg.cc/rprYm5pg/discussion.jpg"
     },
     {
         "title": "Event Calendar and Reminders",
         "description": "Stay organized with an integrated event calendar. Keep track of upcoming study sessions, group meetings, and assignment deadlines. Set reminders to ensure you never miss an important study session or deadline.",
-        "imageURL": "https://example.com/event_calendar_and_reminders.png"
+        "imageURL": "https://i.postimg.cc/SQfNZvhL/event-calender-and-remainder.jpg"
     },
     {
-        "title": "Messaging and Communication",
+        "title": "Messaging & Communication",
         "description": "Communicate with your study group members through built-in messaging features. Send direct messages, create group chats, and stay connected with your peers whenever you need assistance or support.",
-        "imageURL": "https://example.com/messaging_and_communication.png"
+        "imageURL": "https://i.postimg.cc/MTkVYFS2/messaging-and-communications.jpg"
     },
     {
         "title": "File Storage and Sharing",
         "description": "Store and access study materials, notes, and resources securely within the platform. Share files with your study group members for seamless collaboration and information exchange.",
-        "imageURL": "https://example.com/file_storage_and_sharing.png"
+        "imageURL": "https://i.postimg.cc/2yL5XzF0/cloud-storage-1280.jpg"
     },
     {
         "title": "Task Management",
         "description": "Create and assign tasks within your study groups to delegate responsibilities and track progress. Set deadlines, prioritize tasks, and monitor completion status to ensure productivity and accountability.",
-        "imageURL": "https://example.com/task_management.png"
-    },
-    {
-        "title": "Integrated Study Tools",
-        "description": "Access a variety of integrated study tools and resources to enhance your learning experience. From flashcards and quizzes to interactive learning modules, make studying more engaging and effective.",
-        "imageURL": "https://example.com/integrated_study_tools.png"
+        "imageURL": "https://i.postimg.cc/fRy0xh1g/task-management-skills.jpg"
     },
     {
         "title": "Customizable User Profiles",
         "description": "Customize your user profile with personal information, academic interests, and study preferences. Connect with like-minded students, find study groups, and build a network of peers to support your academic journey.",
-        "imageURL": "https://example.com/customizable_user_profiles.png"
+        "imageURL": "https://i.postimg.cc/vTNF69JB/profile.jpg"
     }
 ]

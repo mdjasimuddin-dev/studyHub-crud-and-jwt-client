@@ -37,7 +37,7 @@ const LoginPage = () => {
                         <div className="text-center lg:text-left px-4">
                             <div className='flex items-center justify-center mb-5'>
                                 <img className='h-16 w-16' src="https://i.postimg.cc/J44zYSqz/file.png" alt="" />
-                                <h1 className="text-5xl font-bold">BD<span className="font-bold text-orange-600">Task</span></h1>
+                                <h1 className="text-5xl font-bold">Study<span className="font-bold text-orange-600">Hub</span></h1>
                             </div>
                             <p className="py-5 text-xl text-center">Login using social media to get quick access</p>
 
