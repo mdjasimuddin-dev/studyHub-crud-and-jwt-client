@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import FeatureCard from "./FeatureCard/FeatureCard";
+import Footer from "../../Component/Footer/Footer";
 
 
 
@@ -45,7 +46,10 @@ const HomePage = () => {
             </div>
 
 
-            <h1 className='text-5xl font-bold text-center my-5'>Feature of StudyHub</h1>
+            <div className="my-16">
+                <h1 className="text-5xl font-bold text-center ">Feature Section </h1>
+                <p className="text-2xl font-bold text-center mt-4 text-orange-600">All our features at a glance</p>
+            </div>
 
 
             {/* feature Section  */}
@@ -61,7 +65,12 @@ const HomePage = () => {
 
             {/* faq section  */}
 
-            <h1 className="text-5xl font-bold text-center my-10">Faq Section </h1>
+
+
+            <div className="my-16">
+                <h1 className="text-5xl font-bold text-center ">Faq Section </h1>
+                <p className="text-2xl font-bold text-center mt-4 text-orange-600">All the questions and answers you want</p>
+            </div>
 
             <div className="grid grid-cols-2 p-10 gap-10 bg-[#070F2B] text-white">
                 <div className="space-y-5 grid grid-cols-1">
@@ -191,6 +200,10 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
+
+
+            {/* Footer Sections  */}
+            <Footer/>
         </div>
 
 
