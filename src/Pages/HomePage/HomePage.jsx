@@ -203,7 +203,9 @@ const HomePage = () => {
 
 
             {/* Footer Sections  */}
-            <Footer/>
+            <div className="my-16">
+                <Footer />
+            </div>
         </div>
 
 
