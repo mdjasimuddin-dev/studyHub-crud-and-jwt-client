@@ -41,7 +41,7 @@ const Navbar = () => {
                         </ul>
                     </div>
 
-                    <img className='h-24 w-24 hidden lg:flex' src="https://i.postimg.cc/qRpMr7hP/assignment-logo.webp" alt="" />
+                    <img className='h-24 w-24 hidden lg:flex' src="https://i.postimg.cc/J44zYSqz/logo.png" alt="" />
                     <a className="text-xl lg:text-5xl font-bold">Study<span className="font-bold text-orange-600">Hub</span></a>
 
 

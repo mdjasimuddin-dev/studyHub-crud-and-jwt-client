@@ -7,8 +7,9 @@ import useAuth from "../../Hooks/useAuth";
 
 const LoginPage = () => {
 
-    const {signInGoogle} = useAuth()
+    const {signInGoogle, userLoginWithPassword} = useAuth()
     const navigate = useNavigate()
+
 
 
     const handleGoogleSingIn = (e) => {
@@ -23,6 +24,23 @@ const LoginPage = () => {
             .catch(error => {
                 console.log(error)
             })
+    }
+
+
+    const signInWithPassword = (e) => {
+        e.preventDefault()
+        const form = e.target
+        const email = form.email.value;
+        const password = form.password.value;
+
+        userLoginWithPassword(email, password)
+        .then(result => {
+            console.log("User login successfull", result)
+            navigate(location?.state ? navigate.state : "/")
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
 
 
@@ -57,7 +75,7 @@ const LoginPage = () => {
                         </div>
 
                         <div className="card shrink-0 bg-base-100 mt-10">
-                            <form className="card-body">
+                            <form onSubmit={signInWithPassword} className="card-body">
 
                                 <div className="form-control">
                                     <label className="label">
