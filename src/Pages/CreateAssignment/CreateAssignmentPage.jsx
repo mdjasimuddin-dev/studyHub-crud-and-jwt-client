@@ -25,7 +25,20 @@ const CreateAssignmentPage = () => {
         const assignmentData = {title, description, marks, image_url, ass_lavel, selectDate}
         console.log(assignmentData)
 
-    }
+        fetch("http://localhost:5000/createAssign", {
+            method : "POST",
+            headers : {
+                "content-type" : "application/json"
+            },
+            body : JSON.stringify(assignmentData)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+        })
+
+
+    };
 
     return (
         <div>
