@@ -5,6 +5,7 @@ import ErrorPage from './../Pages/ErrorPage/ErrorPage';
 import HomePage from './../Pages/HomePage/HomePage';
 import LoginPage from './../Pages/LoginPage/LoginPage';
 import RegisterPage from './../Pages/RegisterPage/RegisterPage';
+import CreateAssignmentPage from './../Pages/CreateAssignment/CreateAssignmentPage';
 
 const router = createBrowserRouter([
     {
@@ -28,7 +29,8 @@ const router = createBrowserRouter([
             },
 
             {
-                
+                path : "/createTask",
+                element : <CreateAssignmentPage/>
             }
         ]
     }
