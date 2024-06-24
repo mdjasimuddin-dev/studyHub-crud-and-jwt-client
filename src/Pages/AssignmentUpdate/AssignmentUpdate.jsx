@@ -1,44 +1,56 @@
-import React, { useState } from 'react';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import React from 'react';
+import { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 
-const CreateAssignmentPage = () => {
+
+const AssignmentUpdate = () => {
+
+    const locations = useLocation()
+    const navigate = useNavigate()
+    const updateData = useLoaderData()
+    // console.log(updateData)
+
 
     const [startDate, setStartDate] = useState(new Date());
-    const [label, setLabel] = useState(" ");
+    const [options, setOptions] = useState(" ");
 
-    const handleDifficultLavel = (e) => {
-        setLabel(e.target.value)
+
+    const selectOptions = (e) => {
+        // console.log(e.target.value)
+        setOptions(e.target.value)
     }
 
-
-    const handleCreateAssignment = (e) => {
+    const handleUpdateAssignment = (e) => {
         e.preventDefault()
+
         const form = e.target;
         const title = form.title.value;
         const description = form.description.value;
         const marks = form.marks.value;
         const image_url = form.image_url.value;
-        const ass_lavel = label;
+        const ass_lavel = options;
         const selectDate = startDate;
 
-        const assignmentData = {title, description, marks, image_url, ass_lavel, selectDate}
-        console.log(assignmentData)
+        const updateAssign = { title, description, marks, image_url, ass_lavel, selectDate }
+        console.log(updateAssign)
 
-        fetch("http://localhost:5000/createAssign", {
-            method : "POST",
-            headers : {
-                "content-type" : "application/json"
+        fetch(`http://localhost:5000/updateAssign/${updateData._id}`, {
+            method: "put",
+            headers: {
+                "content-type": "application/json"
             },
-            body : JSON.stringify(assignmentData)
+            body: JSON.stringify(updateAssign)
         })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                navigate("/assignments")
+            })
+    }
 
 
-    };
+
 
     return (
         <div>
@@ -49,44 +61,44 @@ const CreateAssignmentPage = () => {
 
                 <div className='absolute w-1/2'>
                     <div className="card bg-base-200">
-                        <form onSubmit={handleCreateAssignment} className="card-body">
+                        <form onSubmit={handleUpdateAssignment} className="card-body">
 
-                            <h1 className='text-5xl font-bold text-center'>Assignment Create Form</h1>
+                            <h1 className='text-5xl font-bold text-center'>Assignment Update Form</h1>
 
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Title</span>
                                 </label>
-                                <input type="text" name="title" placeholder="Title name" className="input input-bordered" required />
+                                <input type="text" defaultValue={updateData.title} name="title" placeholder="Title name" className="input input-bordered" required />
                             </div>
 
                             <div className="form-control">
                                 <label className="label">
                                     <span className="">Description</span>
                                 </label>
-                                <textarea type="text" name="description" placeholder="Descriptions" className="input input-bordered h-20 resize-none" required />
+                                <textarea type="text" defaultValue={updateData.description} name="description" placeholder="Descriptions" className="input input-bordered h-20 resize-none" required />
                             </div>
 
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Marks</span>
                                 </label>
-                                <input type="text" name="marks" placeholder="Input marks" className="input input-bordered" required />
+                                <input type="text" defaultValue={updateData.marks} name="marks" placeholder="Input marks" className="input input-bordered" required />
                             </div>
 
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Thumbnail Image URL</span>
                                 </label>
-                                <input type="text" name="image_url" placeholder="Thumbnail Image URL" className="input input-bordered" required />
+                                <input type="text" defaultValue={updateData.image_url} name="image_url" placeholder="Thumbnail Image URL" className="input input-bordered" required />
                             </div>
 
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Difficulty label</span>
                                 </label>
-                                <select onChange={handleDifficultLavel} className='p-3 rounded-xl border-2'>
-                                    <option className='p-4' value="" disabled>Chosse an options</option>
+                                <select defaultValue={updateData.ass_lavel} onChange={selectOptions} className='p-3 rounded-xl border-2'>
+                                    <option className='p-4' disabled>Chosse an options</option>
                                     <option value="easy">Easy</option>
                                     <option value="medium">Medium</option>
                                     <option value="hard">Hard</option>
@@ -106,7 +118,7 @@ const CreateAssignmentPage = () => {
 
 
                             <div className="form-control mt-6">
-                                <button className="btn bg-orange-600 text-white font-bold text-xl">Create Assignment</button>
+                                <button className="btn bg-orange-600 text-white font-bold text-xl">Save Changes</button>
                             </div>
                         </form>
                     </div>
@@ -117,4 +129,4 @@ const CreateAssignmentPage = () => {
     );
 };
 
-export default CreateAssignmentPage;
+export default AssignmentUpdate;
