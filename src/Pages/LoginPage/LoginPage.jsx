@@ -26,6 +26,16 @@ const LoginPage = () => {
             })
     }
 
+    // const handleGoogleSingIn = async() => {
+    //     try {
+    //         await signInGoogle()
+    //         navigate('/')
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+
+    // }
+
 
     const signInWithPassword = (e) => {
         e.preventDefault()

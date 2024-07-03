@@ -1,10 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
+import useAuth from '../../Hooks/useAuth';
+import axios from 'axios'
 
 const AssignmentDetails = () => {
 
     const assignDetails = useLoaderData()
     // console.log(assignDetails)
+    const {user} = useAuth()
+    // cosnt [sData, setsData] = useState(null)
+
+
+    const handleSubmitAssignment = (e) => {
+        e.preventDefault()
+
+        const form = e.target;
+        const linkSubmit = form.linkSubmit.value;
+        const noteText = form.noteText.value;
+        const user_email = user?.email;
+        const ass_id = assignDetails._id;
+        const ass_title = assignDetails.title
+        const ass_descriptions = assignDetails.description
+        const ass_marks = assignDetails.marks
+        const ass_label = assignDetails.ass_lavel
+        const owener_email = assignDetails.user_email
+        const status = "pending"
+
+        const submitData = {linkSubmit, ass_id, ass_title, ass_descriptions, owener_email, ass_marks, ass_label, noteText, user_email, status}
+        console.log(submitData)
+
+        fetch(`http://localhost:5000/submitAssign`, {
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify(submitData)
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+
+        // axios.post("http://localhost:5000/submitAssign")
+        // .then(res => console.log(res.data))
+    }
+
+
+
 
 
     return (
@@ -17,7 +57,33 @@ const AssignmentDetails = () => {
                             <p className='my-3 text-xl'>{assignDetails.description}</p>
                             <p className='text-xl'>Marks : {assignDetails.marks}</p>
                             <p className='text-xl'>Defficalt lavel : {assignDetails.ass_lavel}</p>
-                            <p className='text-xl'>{assignDetails.selectDate}</p>
+                            <p className='text-xl'>Date : {new Date(assignDetails.selectDate).toLocaleDateString()}</p>
+                            
+                            <button className="btn bg-orange-600 text-white text-xl" onClick={() => document.getElementById('my_modal_3').showModal()}>Take Assignment</button>
+                            <dialog id="my_modal_3" className="modal">
+                                <div className="modal-box">
+                                    <form method="dialog">
+                                        {/* if there is a button in form, it will close the modal */}
+                                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                    </form>
+                                    <form onSubmit={handleSubmitAssignment}>
+                                        <div className="form-control">
+                                            <label className="label">
+                                                <span className="font-bold text-xl">Pdf/Doc link</span>
+                                            </label>
+                                            <textarea type="text" name="linkSubmit" placeholder="pdf or doc link here" className="input input-bordered h-20 resize-none" required />
+                                        </div>
+
+                                        <div className="form-control">
+                                            <label className="label">
+                                            <span className="font-bold text-xl">Note text</span>
+                                            </label>
+                                            <input type="text" name="noteText" placeholder="quick note text" className="input input-bordered" required />
+                                        </div>
+                                        <button className='w-full btn my-5 bg-orange-600 text-white'>Submit</button>
+                                    </form>
+                                </div>
+                            </dialog>
                         </div>
                     </div>
 
@@ -27,6 +93,13 @@ const AssignmentDetails = () => {
                     </div>
                 </div>
             </div>
+
+
+            {/* You can open the modal using document.getElementById('ID').showModal() method */}
+
+
+
+
         </div>
     );
 };

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import useAuth from '../../Hooks/useAuth';
 
 const CreateAssignmentPage = () => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [label, setLabel] = useState(" ");
+    const {user} = useAuth()
 
     const handleDifficultLavel = (e) => {
         setLabel(e.target.value)
@@ -19,10 +21,12 @@ const CreateAssignmentPage = () => {
         const description = form.description.value;
         const marks = form.marks.value;
         const image_url = form.image_url.value;
+        // const user_email = form.userEmail.value;
+        const user_email = form.userEmail.value;
         const ass_lavel = label;
         const selectDate = startDate;
 
-        const assignmentData = {title, description, marks, image_url, ass_lavel, selectDate}
+        const assignmentData = {title, description, marks, image_url, user_email, ass_lavel, selectDate}
         console.log(assignmentData)
 
         fetch("http://localhost:5000/createAssign", {
@@ -79,6 +83,13 @@ const CreateAssignmentPage = () => {
                                     <span className="label-text">Thumbnail Image URL</span>
                                 </label>
                                 <input type="text" name="image_url" placeholder="Thumbnail Image URL" className="input input-bordered" required />
+                            </div>
+
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">User Email</span>
+                                </label>
+                                <input type="email" defaultValue={user.email} name="userEmail" placeholder="User email" className="input input-bordered" required />
                             </div>
 
                             <div className="form-control">

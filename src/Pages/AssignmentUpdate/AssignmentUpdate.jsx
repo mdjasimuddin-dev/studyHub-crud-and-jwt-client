@@ -2,11 +2,11 @@ import React from 'react';
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 const AssignmentUpdate = () => {
 
-    const locations = useLocation()
     const navigate = useNavigate()
     const updateData = useLoaderData()
     // console.log(updateData)
@@ -35,18 +35,38 @@ const AssignmentUpdate = () => {
         const updateAssign = { title, description, marks, image_url, ass_lavel, selectDate }
         console.log(updateAssign)
 
-        fetch(`http://localhost:5000/updateAssign/${updateData._id}`, {
-            method: "put",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(updateAssign)
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                navigate("/assignments")
-            })
+        Swal.fire({
+            title: "Do you want to save the changes?",
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Save",
+            denyButtonText: `Don't save`
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                fetch(`http://localhost:5000/updateAssign/${updateData._id}`, {
+                    method: "put",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify(updateAssign)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data)
+
+                        if (data.modifiedCount > 0) {
+                            Swal.fire("Saved!", "", "success");
+                            navigate("/assignments")
+                        }
+                    })
+
+            } else if (result.isDenied) {
+                Swal.fire("Changes are not saved", "", "info");
+            }
+        });
+
+
     }
 
 
@@ -91,6 +111,14 @@ const AssignmentUpdate = () => {
                                     <span className="label-text">Thumbnail Image URL</span>
                                 </label>
                                 <input type="text" defaultValue={updateData.image_url} name="image_url" placeholder="Thumbnail Image URL" className="input input-bordered" required />
+                            </div>
+
+
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">User Email</span>
+                                </label>
+                                <input type="email" defaultValue={updateData.user_email} name="userEmail" placeholder="User email" className="input input-bordered" required />
                             </div>
 
                             <div className="form-control">

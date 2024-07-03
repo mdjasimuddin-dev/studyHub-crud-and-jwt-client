@@ -1,32 +1,66 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
+import Swal from 'sweetalert2'
 import useAuth from '../../Hooks/useAuth';
 
 const Assignments = () => {
     const assignmentall = useLoaderData()
-    const  [assignment, setAssignment]  = useState(assignmentall)
+    const [assignment, setAssignment] = useState(assignmentall)
+
+    console.log(assignment)
 
 
-    // cd 
+    const { user } = useAuth()
 
-    const deleteAssignment = (id) => {
-        console.log("Assignmetn Deleter : ", id)
-        fetch(`http://localhost:5000/deleteAssign/${id}`, {
-            method: 'delete'
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log("Delete Succesfull : ", data)
-                const remaining = assignment.filter(assign => assign._id !== id)
-                setAssignment(remaining)
+    const deleteAssignment = (id, userEmail) => {
+        if (user.email === userEmail) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`http://localhost:5000/deleteAssign/${id}`, {
+                        method: 'delete'
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.deleteCount > 0) {
+                                Swal.fire({
+                                    title: "Deleted!",
+                                    text: "Your file has been deleted.",
+                                    icon: "success"
+                                });
+                            }
+
+                            const remaining = assignment.filter(assign => assign._id !== id)
+                            setAssignment(remaining)
+
+                        })
+                }
             })
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Only the user who created it can delete it.!"
+            });
+        }
+
     }
+
+
+
 
 
 
     return (
         <div>
-            <h1 className='text-5xl font-bold text-center'>Total Assignment : {assignmentall.length}</h1>
+            <h1 className='text-5xl font-bold text-center'>Total Assignment : {assignment.length}</h1>
 
 
             <div>
@@ -44,9 +78,9 @@ const Assignments = () => {
                     <table className="table">
                         {/* head */}
                         <thead>
-                            <tr className='grid grid-cols-7 text-center bg-slate-300 text-black text-xl'>
+                            <tr className='grid grid-cols-8 text-center bg-slate-300 text-black text-xl'>
                                 <th className='grid grid-cols-1'>Picture</th>
-                                <th className='grid grid-cols-1'>Title</th>
+                                <th className='grid grid-cols-1 col-span-2'>Title</th>
                                 <th className='grid grid-cols-1'>Lavel</th>
                                 <th className='grid grid-cols-1'>Marks</th>
                                 <th className='grid grid-cols-1'>Delete</th>
@@ -59,7 +93,7 @@ const Assignments = () => {
                             <div>
                                 {
                                     assignment.map(data =>
-                                        <tr className='grid grid-cols-8 items-center text-xl'>
+                                        <tr key={data._id} className='grid grid-cols-8 items-center text-center text-xl'>
                                             <td className='grid grid-cols-1'>
                                                 <div className="flex items-center gap-3">
                                                     {/* picture  */}
@@ -77,7 +111,7 @@ const Assignments = () => {
                                                 <Link to={`/assignmentUpdate/${data._id}`} className="btn btn-ghost bg-orange-600 text-white ">Update</Link>
                                             </th>
                                             <th className='grid grid-cols-1'>
-                                                <button onClick={() => deleteAssignment(data._id)} className="btn btn-ghost bg-red-600 text-white">Delete</button>
+                                                <button onClick={() => deleteAssignment(data._id, data.user_email)} className="btn btn-ghost bg-red-600 text-white">Delete</button>
                                             </th>
                                         </tr>
                                     )

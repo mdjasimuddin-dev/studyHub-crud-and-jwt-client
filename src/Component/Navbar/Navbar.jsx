@@ -6,7 +6,7 @@ import useAuth from '../../Hooks/useAuth';
 const Navbar = () => {
 
 
-    const {user, logOut} = useAuth()
+    const { user, logOut } = useAuth()
 
     const handleLogout = () => {
         logOut()
@@ -18,7 +18,7 @@ const Navbar = () => {
         <li><NavLink to='/register'>Registration</NavLink></li>
         <li><NavLink to='/assignments'>Assignments</NavLink></li>
 
-        { user? 
+        {user ?
             <>
                 <li><NavLink to='/createTask'>Create Assignment</NavLink></li>
                 <li><NavLink to='/pendingTask'>Pending Assignment</NavLink></li>
@@ -55,12 +55,20 @@ const Navbar = () => {
                 <div className="flex justify-end flex-1 px-2">
                     <div className="flex items-stretch">
                         <div className="dropdown dropdown-end">
-                            <div tabIndex={0} role="button" className="btn btn-ghost rounded-btn">
-                                <FaUserCircle  className='h-8 w-8'/>
+                            <div title={user?.displayName} tabIndex={0} role="button" className="w-10">
+                                {
+                                    user?.photoURL? 
+                                    <img 
+                                    referrerPolicy='no-referrer'
+                                    src={user.photoURL} 
+                                    alt=""
+                                    className='rounded-full' /> : 
+                                    <FaUserCircle className='h-8 w-8' />
+
+                                }
                             </div>
                             <ul tabIndex={0} className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                                <li><Link className='btn'>Attempt</Link></li>
-                                <li><Link className='btn'>Assignment</Link></li>
+                                <li><Link className='btn'>My Attempt Assignment</Link></li>
                                 <li><Link onClick={handleLogout} className='btn'>logout</Link></li>
                             </ul>
                         </div>
