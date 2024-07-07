@@ -9,6 +9,8 @@ import CreateAssignmentPage from './../Pages/CreateAssignment/CreateAssignmentPa
 import Assignments from "../Pages/Assignment/Assignments";
 import AssignmentDetails from "../Pages/AssignmentDetails/AssignmentDetails";
 import AssignmentUpdate from "../Pages/AssignmentUpdate/AssignmentUpdate";
+import MyAssignment from "../Pages/SubmitMyAssignment/MyAssignment";
+import PendingAssignment from "../Pages/PendingAssignment/PendingAssignment";
 
 const router = createBrowserRouter([
     {
@@ -54,11 +56,19 @@ const router = createBrowserRouter([
                 loader : ({params}) => fetch(`http://localhost:5000/assignments/${params.id}`)
             },
 
-            // {
-            //     path : "/assignSubmit/:id",
-            //     element : <AssignmentUpdate/>,
-            //     loader : () => fetch(`http://localhost:5000/assignments/${params.id}`)
-            // }
+            {
+                path : "/myAssignment",
+                element : <MyAssignment/>
+            },
+
+            {
+                path : "/pendingTask/:email",
+                element : <PendingAssignment/>,
+                loader : ({params}) => fetch(`http://localhost:5000/pendingList/${params.email}`)
+            }
+                
+
+
         ]
     }
 ])

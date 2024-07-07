@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+
+import {useLoaderData, useNavigate } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
-import axios from 'axios'
 
 const AssignmentDetails = () => {
 
     const assignDetails = useLoaderData()
-    // console.log(assignDetails)
     const {user} = useAuth()
-    // cosnt [sData, setsData] = useState(null)
+    const navigate = useNavigate()
 
 
     const handleSubmitAssignment = (e) => {
@@ -18,18 +16,21 @@ const AssignmentDetails = () => {
         const linkSubmit = form.linkSubmit.value;
         const noteText = form.noteText.value;
         const user_email = user?.email;
+        const user_name = user?.displayName;
         const ass_id = assignDetails._id;
         const ass_title = assignDetails.title
         const ass_descriptions = assignDetails.description
         const ass_marks = assignDetails.marks
         const ass_label = assignDetails.ass_lavel
         const owener_email = assignDetails.user_email
+        const ass_image = assignDetails.image_url;
         const status = "pending"
+        const mark = 'pending'
 
-        const submitData = {linkSubmit, ass_id, ass_title, ass_descriptions, owener_email, ass_marks, ass_label, noteText, user_email, status}
+        const submitData = {linkSubmit, mark, user_name, ass_image, ass_id, ass_title, ass_descriptions, owener_email, ass_marks, ass_label, noteText, user_email, status}
         console.log(submitData)
 
-        fetch(`http://localhost:5000/submitAssign`, {
+        fetch(`http://localhost:5000/assingment`, {
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"
@@ -37,10 +38,10 @@ const AssignmentDetails = () => {
             body : JSON.stringify(submitData)
         })
         .then(res => res.json())
-        .then(data => console.log(data))
-
-        // axios.post("http://localhost:5000/submitAssign")
-        // .then(res => console.log(res.data))
+        .then(data => {
+            console.log(data)
+            navigate("/myAssignment")
+        })
     }
 
 

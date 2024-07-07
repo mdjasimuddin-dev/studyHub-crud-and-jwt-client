@@ -33,7 +33,7 @@ const AssignmentUpdate = () => {
         const selectDate = startDate;
 
         const updateAssign = { title, description, marks, image_url, ass_lavel, selectDate }
-        console.log(updateAssign)
+        // console.log(updateAssign)
 
         Swal.fire({
             title: "Do you want to save the changes?",
@@ -53,7 +53,7 @@ const AssignmentUpdate = () => {
                 })
                     .then(res => res.json())
                     .then(data => {
-                        console.log(data)
+                        // console.log(data)
 
                         if (data.modifiedCount > 0) {
                             Swal.fire("Saved!", "", "success");
@@ -65,8 +65,6 @@ const AssignmentUpdate = () => {
                 Swal.fire("Changes are not saved", "", "info");
             }
         });
-
-
     }
 
 

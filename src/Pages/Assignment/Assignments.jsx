@@ -7,9 +7,6 @@ const Assignments = () => {
     const assignmentall = useLoaderData()
     const [assignment, setAssignment] = useState(assignmentall)
 
-    console.log(assignment)
-
-
     const { user } = useAuth()
 
     const deleteAssignment = (id, userEmail) => {
@@ -39,7 +36,6 @@ const Assignments = () => {
 
                             const remaining = assignment.filter(assign => assign._id !== id)
                             setAssignment(remaining)
-
                         })
                 }
             })
@@ -54,14 +50,9 @@ const Assignments = () => {
     }
 
 
-
-
-
-
     return (
         <div>
             <h1 className='text-5xl font-bold text-center'>Total Assignment : {assignment.length}</h1>
-
 
             <div>
                 <h1 className='text-2xl font-bold my-2'>Assignmetn lavel</h1>

@@ -14,16 +14,19 @@ const Navbar = () => {
 
     const links = <>
         <li><NavLink to='/'>Home</NavLink></li>
-        <li><NavLink to='/login'>Login</NavLink></li>
-        <li><NavLink to='/register'>Registration</NavLink></li>
+
         <li><NavLink to='/assignments'>Assignments</NavLink></li>
 
         {user ?
             <>
                 <li><NavLink to='/createTask'>Create Assignment</NavLink></li>
-                <li><NavLink to='/pendingTask'>Pending Assignment</NavLink></li>
+                <li><NavLink to={`/pendingTask/${user?.email}`}>Pending Assignment</NavLink></li>
             </>
-            : null
+            :
+            <>
+                <li><NavLink to='/login'>Login</NavLink></li>
+                <li><NavLink to='/register'>Registration</NavLink></li>
+            </>
         }
 
     </>
@@ -57,18 +60,18 @@ const Navbar = () => {
                         <div className="dropdown dropdown-end">
                             <div title={user?.displayName} tabIndex={0} role="button" className="w-10">
                                 {
-                                    user?.photoURL? 
-                                    <img 
-                                    referrerPolicy='no-referrer'
-                                    src={user.photoURL} 
-                                    alt=""
-                                    className='rounded-full' /> : 
-                                    <FaUserCircle className='h-8 w-8' />
+                                    user?.photoURL ?
+                                        <img
+                                            referrerPolicy='no-referrer'
+                                            src={user.photoURL}
+                                            alt=""
+                                            className='rounded-full' /> :
+                                        <FaUserCircle className='h-8 w-8' />
 
                                 }
                             </div>
                             <ul tabIndex={0} className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                                <li><Link className='btn'>My Attempt Assignment</Link></li>
+                                <li><Link to='/myAssignment' className='btn'>My Attempt Assignment</Link></li>
                                 <li><Link onClick={handleLogout} className='btn'>logout</Link></li>
                             </ul>
                         </div>

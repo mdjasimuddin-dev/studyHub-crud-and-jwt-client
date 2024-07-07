@@ -2,6 +2,7 @@
 import { FaGoogle, FaFacebookF, FaGithub } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
+import { updateProfile } from "firebase/auth";
 
 
 const RegisterPage = () => {
@@ -33,6 +34,13 @@ const RegisterPage = () => {
             const user = result.user;
             console.log(user)
             if(user){
+                updateProfile(user, {
+                    displayName : name
+                })
+                .then(()=>{
+                    console.log("profile update done")
+                })
+                .catch(err => console.log(err))
                 navigate(location.state? location.pathname : "/")
             }
         })
