@@ -30,7 +30,7 @@ const AssignmentDetails = () => {
         const submitData = {linkSubmit, mark, user_name, ass_image, ass_id, ass_title, ass_descriptions, owener_email, ass_marks, ass_label, noteText, user_email, status}
         console.log(submitData)
 
-        fetch(`http://localhost:5000/assingment`, {
+        fetch(`http://localhost:5000/assingments`, {
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"

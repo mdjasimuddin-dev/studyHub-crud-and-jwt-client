@@ -3,12 +3,14 @@ import { FaGoogle, FaFacebookF, FaGithub } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import { updateProfile } from "firebase/auth";
+import axios from "axios";
 
 
 const RegisterPage = () => {
 
-    const {userCreate} = useAuth()
+    const { userCreate } = useAuth()
     const navigate = useNavigate()
+
 
     const handleUserCreate = (e) => {
         e.preventDefault()
@@ -18,36 +20,74 @@ const RegisterPage = () => {
         const email = form.email.value;
         const password = form.password.value;
         const Accepted = form.terms.checked;
-
-        const user = {name, email, password, Accepted}
+        const user = { name, email, password, Accepted }
         console.log(user)
 
-
-        if(!Accepted){
+        if (!Accepted) {
             console.log("Please Accept terms and coditions")
             return
         }
 
-
         userCreate(email, password)
-        .then(result => {
-            const user = result.user;
-            console.log(user)
-            if(user){
-                updateProfile(user, {
-                    displayName : name
-                })
-                .then(()=>{
-                    console.log("profile update done")
-                })
-                .catch(err => console.log(err))
-                navigate(location.state? location.pathname : "/")
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            .then(result => {
+                const user = result.user;
+                console.log(user)
+                const {data} = axios.post('http://localhost:5000/jwt', {email : result?.user?.email}, {withCredentials : true})
+                console.log("token",data)
+                if (user) {
+                    updateProfile(user, {
+                        displayName: name
+                    })
+                        .then(() => {
+                            console.log("profile update done")
+                        })
+                        .catch(err => console.log(err))
+                    navigate(location.state ? location.pathname : "/")
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
+
+    // const handleUserCreate = (e) => {
+    //     e.preventDefault()
+
+    //     const form = e.target
+    //     const name = form.name.value;
+    //     const email = form.email.value;
+    //     const password = form.password.value;
+    //     const Accepted = form.terms.checked;
+
+    //     const user = { name, email, password, Accepted }
+    //     console.log(user)
+
+
+    //     if (!Accepted) {
+    //         console.log("Please Accept terms and coditions")
+    //         return
+    //     }
+
+
+    //     userCreate(email, password)
+    //         .then(result => {
+    //             const user = result.user;
+    //             console.log(user)
+    //             if (user) {
+    //                 updateProfile(user, {
+    //                     displayName: name
+    //                 })
+    //                     .then(() => {
+    //                         console.log("profile update done")
+    //                     })
+    //                     .catch(err => console.log(err))
+    //                 navigate(location.state ? location.pathname : "/")
+    //             }
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //         })
+    // }
 
 
     return (
@@ -103,7 +143,7 @@ const RegisterPage = () => {
                                 </div>
 
                                 <div className="flex items-center">
-                                    <input type="checkbox" name="terms" className="mr-2"/>
+                                    <input type="checkbox" name="terms" className="mr-2" />
                                     <p className="my-2">I agree to the <span className="text-blue-600 underline cursor-pointer">privacy policy</span> and <span className="text-blue-600 underline cursor-pointer">terms of service</span>.</p>
                                 </div>
 

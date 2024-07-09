@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 // import { Link, useLoaderData } from 'react-router-dom';
 import { useEffect } from 'react';
 // import Swal from 'sweetalert2';
@@ -12,11 +13,10 @@ const MyAssignment = () => {
     const [assign, setAssign] = useState([])
 
     useEffect(() => {
-        fetch(`http://localhost:5000/MyAssignList/${user?.email}`)
-            .then(res => res.json())
+        axios.get(`http://localhost:5000/MyAssignList/${user?.email}`, {withCredentials : true})
             .then(data => {
-                console.log(data)
-                setAssign(data)
+                console.log(data.data)
+                setAssign(data.data)
             })
     }, [user])
 

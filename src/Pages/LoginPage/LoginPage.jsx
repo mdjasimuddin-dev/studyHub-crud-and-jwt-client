@@ -1,7 +1,8 @@
 
 import { FaGoogle, FaFacebookF, FaGithub } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
+import axios from "axios";
 
 
 
@@ -9,32 +10,33 @@ const LoginPage = () => {
 
     const {signInGoogle, userLoginWithPassword} = useAuth()
     const navigate = useNavigate()
+    const location = useLocation()
 
 
 
-    const handleGoogleSingIn = (e) => {
-        e.preventDefault()
-        signInGoogle()
-            .then(result => {
-                const logged =result.user;
-                if(logged){
-                    navigate(location.state ? location.state : "/")
-                }
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
-
-    // const handleGoogleSingIn = async() => {
-    //     try {
-    //         await signInGoogle()
-    //         navigate('/')
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-
+    // const handleGoogleSingIn = (e) => {
+    //     e.preventDefault()
+    //     signInGoogle()
+    //         .then(result => {
+    //             console.log(result.user)
+    //             // if(logged){
+    //             //     navigate(location.state ? location.state : "/")
+    //             // }
+    //         })
+    //         .catch(error => {
+    //             console.log(error)
+    //         })
     // }
+
+    const handleGoogleSingIn = async() => {
+        try {
+            const result = await signInGoogle()
+            await axios.post('http://localhost:5000/jwt', {email : result?.user?.email}, {withCredentials: true})
+            navigate('/')
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 
     const signInWithPassword = (e) => {
@@ -46,6 +48,7 @@ const LoginPage = () => {
         userLoginWithPassword(email, password)
         .then(result => {
             console.log("User login successfull", result)
+            axios.post(`http://localhost:5000/jwt`, {email : result?.user?.email}, {withCredentials : true})
             navigate(location?.state ? navigate.state : "/")
         })
         .catch(err => {
@@ -107,11 +110,7 @@ const LoginPage = () => {
                                 </div>
                             </form>
                         </div>
-
                     </div>
-
-
-
                 </div>
             </div>
         </div>

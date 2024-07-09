@@ -11,6 +11,8 @@ import AssignmentDetails from "../Pages/AssignmentDetails/AssignmentDetails";
 import AssignmentUpdate from "../Pages/AssignmentUpdate/AssignmentUpdate";
 import MyAssignment from "../Pages/SubmitMyAssignment/MyAssignment";
 import PendingAssignment from "../Pages/PendingAssignment/PendingAssignment";
+import PrivateRouter from "./PrivateRouter";
+import axios from "axios";
 
 const router = createBrowserRouter([
     {
@@ -41,34 +43,31 @@ const router = createBrowserRouter([
 
             {
                 path : "/assignmentsDetails/:id",
-                element : <AssignmentDetails/>,
-                loader : ({params}) => fetch(`http://localhost:5000/assignments/${params.id}`)
+                element : <PrivateRouter><AssignmentDetails/></PrivateRouter>,
+                loader : ({params}) => fetch(`http://localhost:5000/assignments/${params.id}`, {credentials : "include"})
             },
 
             {
                 path : "/createTask",
-                element : <CreateAssignmentPage/>
+                element : <PrivateRouter><CreateAssignmentPage/></PrivateRouter>
             },
 
             {
                 path : "/assignmentUpdate/:id",
-                element : <AssignmentUpdate/>,
-                loader : ({params}) => fetch(`http://localhost:5000/assignments/${params.id}`)
+                element : <PrivateRouter><AssignmentUpdate/></PrivateRouter>,
+                loader : ({params}) => fetch(`http://localhost:5000/assignments/${params.id}`, {credentials:"include"})
             },
 
             {
                 path : "/myAssignment",
-                element : <MyAssignment/>
+                element : <PrivateRouter><MyAssignment/></PrivateRouter>
             },
 
             {
                 path : "/pendingTask/:email",
-                element : <PendingAssignment/>,
-                loader : ({params}) => fetch(`http://localhost:5000/pendingList/${params.email}`)
+                element : <PrivateRouter><PendingAssignment/></PrivateRouter>,
+                loader : ({params}) => fetch(`http://localhost:5000/pendingList/${params.email}`, {credentials : "include"})
             }
-                
-
-
         ]
     }
 ])

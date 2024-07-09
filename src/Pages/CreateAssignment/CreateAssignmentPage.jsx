@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useAuth from '../../Hooks/useAuth';
+import axios from 'axios';
 
 const CreateAssignmentPage = () => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [label, setLabel] = useState(" ");
-    const {user} = useAuth()
+    const { user } = useAuth()
 
     const handleDifficultLavel = (e) => {
         setLabel(e.target.value)
@@ -26,22 +27,13 @@ const CreateAssignmentPage = () => {
         const ass_lavel = label;
         const selectDate = startDate;
 
-        const assignmentData = {title, description, marks, image_url, user_email, ass_lavel, selectDate}
+        const assignmentData = { title, description, marks, image_url, user_email, ass_lavel, selectDate }
         console.log(assignmentData)
 
-        fetch("http://localhost:5000/createAssign", {
-            method : "POST",
-            headers : {
-                "content-type" : "application/json"
-            },
-            body : JSON.stringify(assignmentData)
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-        })
-
-
+        axios.post(`http://localhost:5000/createAssign`, assignmentData, {withCredentials : true} )
+            .then(data => {
+                console.log(data.data)
+            })
     };
 
     return (

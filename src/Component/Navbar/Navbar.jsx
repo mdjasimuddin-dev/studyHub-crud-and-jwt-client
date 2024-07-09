@@ -2,6 +2,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { FaUserCircle } from "react-icons/fa";
 import useAuth from '../../Hooks/useAuth';
+import axios from 'axios';
 
 const Navbar = () => {
 
