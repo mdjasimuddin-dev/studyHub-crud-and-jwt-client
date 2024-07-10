@@ -28,7 +28,7 @@ const PendingCard = ({ Assign }) => {
         console.log(assignUpdate)
 
 
-        axios.put(`http://localhost:5000/updateStatus/${assignId}`, assignUpdate)
+        axios.put(`http://localhost:5000/updateStatus/${assignId}`, assignUpdate, {withCredentials : true})
             .then(data => {
                 console.log(data)
                 console.log(`http://localhost:5000/updateStatus/${assignId}`)

@@ -4,21 +4,29 @@ import axios from 'axios';
 import { useEffect } from 'react';
 // import Swal from 'sweetalert2';
 import useAuth from '../../Hooks/useAuth';
+import PreviewDoc from '../../Component/PreviewDoc/PreviewDoc';
 
 const MyAssignment = () => {
 
     const { user } = useAuth()
-    console.log(user?.email)
-
     const [assign, setAssign] = useState([])
+    const [preview, setPreview] = useState()
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/MyAssignList/${user?.email}`, {withCredentials : true})
+        fetch(`http://localhost:5000/MyAssignList/${user?.email}`, { credentials: 'include' })
+            .then(res => res.json())
             .then(data => {
-                console.log(data.data)
-                setAssign(data.data)
+                console.log(data)
+                setAssign(data)
             })
     }, [user])
+
+
+    const handleDocPreview = (link) => {
+        document.getElementById('preview_modal').showModal()
+        console.log(link)
+        setPreview(link)
+    }
 
 
 
@@ -29,9 +37,9 @@ const MyAssignment = () => {
 
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-10 lg:mt-10 m-2'>
                 {
-                    assign.map(item => <div key={item._id}>
+                    assign?.map(item => <div key={item._id}>
                         {/* <h1>This is sumitted assignment id : {item._id}</h1> */}
-                        <div className="grid grid-cols-1 lg:grid-cols-3 p-2 shadow-xl border-2">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 p-2 shadow-xl border-2 ">
                             <div>
                                 <img src={item.ass_image} alt="Assignment image" className='h-full ' />
                             </div>
@@ -42,18 +50,44 @@ const MyAssignment = () => {
                                     <h1 className=' text-white bg-orange-600 rounded-md p-2'>{item.status}</h1>
                                 </div>
                                 <h2 className="card-title font-bold text-2xl">Title : {item.ass_title.length > 20 ? item.ass_title.slice(0, 20) + "..." : item.ass_title}</h2>
-                                <p className=''>{item.ass_descriptions}</p>
+
                                 <div className='flex justify-between'>
                                     <h1 className="">Your mark : {item.mark}</h1>
                                     <h1 className=""> Assignment mark : {item.ass_marks}</h1>
                                 </div>
-                                <h1 className="bg-orange-400 p-2">feedback : {item.feedback}</h1>
-                                
+                                <div className='flex items-center'>
+                                    <button onClick={()=>handleDocPreview(item.linkSubmit)} className='justify-center btn bg-blue-500 text-white mr-4'>Preview</button>
+                                    <h1 className="bg-orange-400 p-2 flex-grow">feedback : {item.feedback}</h1>
+                                </div>
                             </div>
                         </div>
+
+
+
                     </div>)
                 }
             </div>
+
+
+            <dialog id="preview_modal" className="modal">
+                <div className="p-10 m-24 bg-white w-2/3 min-h-screen relative">
+                    <form method="dialog">
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
+
+                    <div>
+                        <h1 className='text-2xl font-bold text-center'>Assingment Doc Preview</h1>
+                        <hr className='bg-base-300 my-4' />
+
+                        <div>
+                            <iframe src={preview} title={`PDF Preview`} width="100%" height="500px" style={{ border: 'none' }}/>
+                        </div>
+
+
+                    </div>
+                </div>
+            </dialog>
+
 
         </div>
     );

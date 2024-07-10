@@ -1,12 +1,37 @@
 
-import {useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
 const AssignmentDetails = () => {
 
     const assignDetails = useLoaderData()
-    const {user} = useAuth()
+    const { user } = useAuth()
     const navigate = useNavigate()
+
+    const {_id, title, description, marks, ass_lavel, selectDate, image_url } = assignDetails
+    console.log(_id, )
+    
+    const [isDisabled, setIsDisabled] = useState(false);
+    console.log(find)
+
+
+    useEffect(()=>{
+        axios.get(`http://localhost:5000/MyAssignList/${user?.email}`, {withCredentials : true})
+        .then(data => {
+            console.log(data.data)
+            if(data.data){
+                for(let i of data.data){
+                    console.log(i)
+                    if(i.ass_id === _id){
+                        console.log('data already submitted')
+                        setIsDisabled(true);
+                    }
+                }
+            }
+        })
+    },[])
 
 
     const handleSubmitAssignment = (e) => {
@@ -26,22 +51,21 @@ const AssignmentDetails = () => {
         const ass_image = assignDetails.image_url;
         const status = "pending"
         const mark = 'pending'
+        const feedback = 'pending'
 
-        const submitData = {linkSubmit, mark, user_name, ass_image, ass_id, ass_title, ass_descriptions, owener_email, ass_marks, ass_label, noteText, user_email, status}
+        const submitData = { linkSubmit, mark, feedback, user_name, ass_image, ass_id, ass_title, ass_descriptions, owener_email, ass_marks, ass_label, noteText, user_email, status }
         console.log(submitData)
 
-        fetch(`http://localhost:5000/assingments`, {
-            method : "POST",
-            headers : {
-                "Content-Type" : "application/json"
-            },
-            body : JSON.stringify(submitData)
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            navigate("/myAssignment")
-        })
+        axios.post(`http://localhost:5000/assingment`, submitData, { withCredentials: true })
+            .then(data => {
+                console.log(data.data)
+                navigate("/myAssignment")
+            })
+    }
+
+
+    const handleModal = () => {
+        document.getElementById('my_modal_3').showModal()
     }
 
 
@@ -54,13 +78,13 @@ const AssignmentDetails = () => {
                 <div className='grid grid-cols-2 gap-10'>
                     <div className="grid grid-cols-1 card bg-base-100 shadow-xl">
                         <div className="card-body">
-                            <h1 className='card-title text-5xl font-bold'>{assignDetails.title}</h1>
-                            <p className='my-3 text-xl'>{assignDetails.description}</p>
-                            <p className='text-xl'>Marks : {assignDetails.marks}</p>
-                            <p className='text-xl'>Defficalt lavel : {assignDetails.ass_lavel}</p>
-                            <p className='text-xl'>Date : {new Date(assignDetails.selectDate).toLocaleDateString()}</p>
-                            
-                            <button className="btn bg-orange-600 text-white text-xl" onClick={() => document.getElementById('my_modal_3').showModal()}>Take Assignment</button>
+                            <h1 className='card-title text-5xl font-bold'>{title}</h1>
+                            <p className='my-3 text-xl'>{description}</p>
+                            <p className='text-xl'>Marks : {marks}</p>
+                            <p className='text-xl'>Defficalt lavel : {ass_lavel}</p>
+                            <p className='text-xl'>Date : {new Date(selectDate).toLocaleDateString()}</p>
+
+                            <button className="btn bg-orange-600 text-white text-xl" disabled={isDisabled} onClick={() => handleModal()}>Take Assignment</button>
                             <dialog id="my_modal_3" className="modal">
                                 <div className="modal-box">
                                     <form method="dialog">
@@ -77,7 +101,7 @@ const AssignmentDetails = () => {
 
                                         <div className="form-control">
                                             <label className="label">
-                                            <span className="font-bold text-xl">Note text</span>
+                                                <span className="font-bold text-xl">Note text</span>
                                             </label>
                                             <input type="text" name="noteText" placeholder="quick note text" className="input input-bordered" required />
                                         </div>
@@ -90,7 +114,7 @@ const AssignmentDetails = () => {
 
 
                     <div className='grid grid-cols-1'>
-                        <img className='w-full' src={assignDetails.image_url} alt="" />
+                        <img className='w-full' src={image_url} alt="" />
                     </div>
                 </div>
             </div>

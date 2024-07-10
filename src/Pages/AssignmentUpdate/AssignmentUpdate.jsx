@@ -3,6 +3,7 @@ import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 
 const AssignmentUpdate = () => {
@@ -44,18 +45,10 @@ const AssignmentUpdate = () => {
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/updateAssign/${updateData._id}`, {
-                    method: "put",
-                    headers: {
-                        "content-type": "application/json"
-                    },
-                    body: JSON.stringify(updateAssign)
-                })
-                    .then(res => res.json())
+                axios.put(`http://localhost:5000/updateAssign/${updateData._id}`,updateAssign, {withCredentials : true})
                     .then(data => {
                         // console.log(data)
-
-                        if (data.modifiedCount > 0) {
+                        if (data.data.modifiedCount > 0) {
                             Swal.fire("Saved!", "", "success");
                             navigate("/assignments")
                         }
