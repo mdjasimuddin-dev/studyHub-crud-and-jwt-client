@@ -31,7 +31,7 @@ const CreateAssignmentPage = () => {
         const assignmentData = { title, description, marks, image_url, user_email, ass_lavel, selectDate }
         console.log(assignmentData)
 
-        axios.post(`http://localhost:5000/createAssign`, assignmentData, { withCredentials: true })
+        axios.post(`https://crud-and-jwt-server-nine.vercel.app/createAssign`, assignmentData, { withCredentials: true })
             .then(data => {
                 console.log(data.data)
                 if (data.data.insertedId) {

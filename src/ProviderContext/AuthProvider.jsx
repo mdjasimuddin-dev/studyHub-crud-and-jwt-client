@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
 
     const logOut = () => {
         setLoader(true)
-        const { data } = axios.get('http://localhost:5000/logout', {withCredentials : true})
+        const { data } = axios.get('https://crud-and-jwt-server-nine.vercel.app/logout', {withCredentials : true})
         console.log(data)
         return signOut(auth)
     }

@@ -11,7 +11,7 @@ const MyAssignment = () => {
     const [preview, setPreview] = useState()
 
     useEffect(() => {
-        fetch(`http://localhost:5000/MyAssignList/${user?.email}`, { credentials: 'include' })
+        fetch(`https://crud-and-jwt-server-nine.vercel.app/MyAssignList/${user?.email}`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => {
                 // console.log(data)

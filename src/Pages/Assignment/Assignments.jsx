@@ -23,7 +23,7 @@ const Assignments = () => {
                 confirmButtonText: "Yes, delete it!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch(`http://localhost:5000/deleteAssign/${id}`, {
+                    fetch(`https://crud-and-jwt-server-nine.vercel.app/deleteAssign/${id}`, {
                         method: 'delete'
                     })
                         .then(res => res.json())

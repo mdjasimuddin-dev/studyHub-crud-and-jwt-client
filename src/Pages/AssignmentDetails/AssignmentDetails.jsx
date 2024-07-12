@@ -17,7 +17,7 @@ const AssignmentDetails = () => {
     const [isDisabled, setIsDisabled] = useState(false);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/MyAssignList/${user?.email}`, { withCredentials: true })
+        axios.get(`https://crud-and-jwt-server-nine.vercel.app/MyAssignList/${user?.email}`, { withCredentials: true })
             .then(data => {
                 if (data.data) {
                     for (let i of data.data) {
@@ -53,7 +53,7 @@ const AssignmentDetails = () => {
         const submitData = { linkSubmit, mark, feedback, user_name, ass_image, ass_id, ass_title, ass_descriptions, owener_email, ass_marks, ass_label, noteText, user_email, status }
         console.log(submitData)
 
-        axios.post(`http://localhost:5000/assingment`, submitData, { withCredentials: true })
+        axios.post(`https://crud-and-jwt-server-nine.vercel.app/assingment`, submitData, { withCredentials: true })
             .then(data => {
                 console.log(data.data)
                 if (data.data.insertedId) {

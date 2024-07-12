@@ -43,7 +43,7 @@ const AssignmentUpdate = () => {
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                axios.put(`http://localhost:5000/updateAssign/${updateData._id}`,updateAssign, {withCredentials : true})
+                axios.put(`https://crud-and-jwt-server-nine.vercel.app/updateAssign/${updateData._id}`,updateAssign, {withCredentials : true})
                     .then(data => {
                         // console.log(data)
                         if (data.data.modifiedCount > 0) {

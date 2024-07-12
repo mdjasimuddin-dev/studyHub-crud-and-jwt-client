@@ -25,7 +25,7 @@ const PendingCard = ({ Assign }) => {
         const assignUpdate = { mark, feedback, status }
         console.log(assignUpdate)
 
-        axios.put(`http://localhost:5000/updateStatus/${assignId}`, assignUpdate, { withCredentials: true })
+        axios.put(`https://crud-and-jwt-server-nine.vercel.app/updateStatus/${assignId}`, assignUpdate, { withCredentials: true })
             .then(data => {
                 console.log(data.data)
             })

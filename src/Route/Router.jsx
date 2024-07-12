@@ -38,13 +38,13 @@ const router = createBrowserRouter([
             {
                 path : "/assignments",
                 element : <Assignments/>,
-                loader : () => fetch(`http://localhost:5000/assignments`)
+                loader : () => fetch(`https://crud-and-jwt-server-nine.vercel.app/assignments`)
             },
 
             {
                 path : "/assignmentsDetails/:id",
                 element : <PrivateRouter><AssignmentDetails/></PrivateRouter>,
-                loader : ({params}) => fetch(`http://localhost:5000/assignments/${params.id}`, {credentials : "include"})
+                loader : ({params}) => fetch(`https://crud-and-jwt-server-nine.vercel.app/assignments/${params.id}`, {credentials : "include"})
             },
 
             {
@@ -55,7 +55,7 @@ const router = createBrowserRouter([
             {
                 path : "/assignmentUpdate/:id",
                 element : <PrivateRouter><AssignmentUpdate/></PrivateRouter>,
-                loader : ({params}) => fetch(`http://localhost:5000/assignments/${params.id}`, {credentials:"include"})
+                loader : ({params}) => fetch(`https://crud-and-jwt-server-nine.vercel.app/assignments/${params.id}`, {credentials:"include"})
             },
 
             {
@@ -66,12 +66,12 @@ const router = createBrowserRouter([
             // {
             //     path : "/pendingTask/:email",
             //     element : <PrivateRouter><PendingAssignment/></PrivateRouter>,
-            //     loader : ({params}) => fetch(`http://localhost:5000/pendingList/${params.email}`, {credentials : "include"})
+            //     loader : ({params}) => fetch(`https://crud-and-jwt-server-nine.vercel.app/pendingList/${params.email}`, {credentials : "include"})
             // },
             {
                 path : "/pendingTask",
                 element : <PrivateRouter><PendingAssignment/></PrivateRouter>,
-                loader : () => fetch(`http://localhost:5000/pendingList`, {credentials : "include"})
+                loader : () => fetch(`https://crud-and-jwt-server-nine.vercel.app/pendingList`, {credentials : "include"})
             }
         ]
     }

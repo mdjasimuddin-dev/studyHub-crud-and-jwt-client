@@ -32,7 +32,7 @@ const RegisterPage = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user)
-                const {data} = axios.post('http://localhost:5000/jwt', {email : result?.user?.email}, {withCredentials : true})
+                const {data} = axios.post('https://crud-and-jwt-server-nine.vercel.app/jwt', {email : result?.user?.email}, {withCredentials : true})
                 console.log("token",data)
                 if (user) {
                     updateProfile(user, {
