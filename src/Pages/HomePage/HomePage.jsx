@@ -71,14 +71,14 @@ const HomePage = () => {
                 <p className="text-2xl px-2 font-bold text-center mt-4 text-orange-600">All the questions and answers you want</p>
             </div>
 
-            <div className="grid lg:grid-cols-2 p-4 lg:p-10 gap-10 bg-[#070F2B] text-white">
+            <div className="grid md:grid-cols-2 p-4 lg:p-10 gap-10 bg-[#070F2B] text-white">
                 <div className="space-y-5 grid grid-cols-1">
-                    <h1 className="text-5xl text-center lg:text-left lg:text-7xl font-bold">Most Questions We Answered</h1>
+                    <h1 className="text-5xl text-center lg:text-left lg:text-6xl font-bold">Most Questions We Answered</h1>
                     <p className="text-xl text-center lg:text-left lg:text-2xl">Explore our FAQ page for comprehensive answers to common queries. Find solutions, troubleshoot, and gain insights into our services and offerings. Your questions, answered with clarity and detail.</p>
                 </div>
 
                 <div className="grid grid-cols-1">
-                    <img className="" src="https://i.postimg.cc/R0rYXGgx/support.jpg" alt="" />
+                    <img className="w-full h-full" src="https://i.postimg.cc/R0rYXGgx/support.jpg" alt="" />
                 </div>
             </div>
 

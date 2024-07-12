@@ -64,15 +64,15 @@ const AssignmentUpdate = () => {
     return (
         <div>
 
-            <div className='flex justify-center items-center'>
-                <img className='w-full relative' src="https://i.postimg.cc/3r4zrzzn/pexels-katerina-holmes-5905615.jpg" alt="" />
+            <div className='flex justify-center min-h-screen items-center bg-[url("https://i.postimg.cc/3r4zrzzn/pexels-katerina-holmes-5905615.jpg")] bg-no-repeat bg-cover'>
+                {/* <img className='w-full relative' src="https://i.postimg.cc/3r4zrzzn/pexels-katerina-holmes-5905615.jpg" alt="" /> */}
 
 
-                <div className='absolute w-1/2'>
+                <div className='w-full m-5 lg:my-8 lg:w-1/2'>
                     <div className="card bg-base-200">
                         <form onSubmit={handleUpdateAssignment} className="card-body">
 
-                            <h1 className='text-5xl font-bold text-center'>Assignment Update Form</h1>
+                            <h1 className='text-2xl lg:text-5xl font-bold text-center'>Assignment Update Form</h1>
 
                             <div className="form-control">
                                 <label className="label">

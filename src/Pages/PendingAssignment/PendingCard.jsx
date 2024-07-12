@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { FaEye } from "react-icons/fa";
-import Swal from 'sweetalert2';
-import useAuth from '../../Hooks/useAuth';
 
 const PendingCard = ({ Assign }) => {
 
     const { _id, user_name, ass_image, ass_label, ass_marks, mark, ass_title, linkSubmit, noteText, status } = Assign
     const [assignId, setAssignId] = useState()
-    const {user} = useAuth()
 
     const test = () => {
         document.getElementById('my_modal_3').showModal()
         setAssignId(_id)
-        console.log(_id)
+        // console.log(_id)
     }
 
 
     const handleAssignMark = (e) => {
         e.preventDefault()
-
-        console.log(location.pathname)
 
         const form = e.target;
         const mark = form.mark.value;
@@ -30,7 +24,6 @@ const PendingCard = ({ Assign }) => {
 
         const assignUpdate = { mark, feedback, status }
         console.log(assignUpdate)
-
 
         axios.put(`http://localhost:5000/updateStatus/${assignId}`, assignUpdate, { withCredentials: true })
             .then(data => {
@@ -41,7 +34,6 @@ const PendingCard = ({ Assign }) => {
             })
     }
 
-
     const handleDocPreview = () => {
         document.getElementById('preview_modal').showModal()
     }
@@ -50,22 +42,24 @@ const PendingCard = ({ Assign }) => {
         <div>
             <div className="grid grid-cols-1 lg:grid-cols-3 p-2 shadow-xl border-2">
                 <div>
-                    <img src={ass_image} alt="Assignment image" className='h-full ' />
+                    <img src={ass_image} alt="Assignment image" className='md:w-full h-full lg:h-full ' />
                 </div>
 
-                <div className="space-y-2 lg:px-4 lg:col-span-2">
+                <div className="space-y-2 md:space-y-5 lg:space-y-2 lg:px-4 lg:col-span-2 md:my-5 lg:my-2">
                     <div className='flex justify-between items-center'>
-                        <h1 className=''>Deficult label : {ass_label}</h1>
-                        <h1 className=' text-white bg-orange-600 rounded-md p-2'>{status}</h1>
+                        <h1 className='text-xl md:text-4xl lg:text-base'>Deficult label : {ass_label}</h1>
+                        <h1 className='text-white bg-orange-600 rounded-md p-2 mt-2 md:mt-0 lg:mt-0 md:px-20 lg:p-2'>{status}</h1>
                     </div>
-                    <h2 className="font-bold text-2xl">Title : {ass_title.length > 20 ? ass_title.slice(0, 20) + "..." : ass_title}</h2>
-                    <p> Examinee name : {user_name}</p>
+                    <h2 className="text-2xl font-bold md:text-5xl lg:text-2xl">Title : {ass_title.length > 20 ? ass_title.slice(0, 20) + "..." : ass_title}</h2>
+                    <p className='md:text-4xl lg:text-base'> Examinee name : {user_name}</p>
                     <div className='flex justify-between'>
-                        <h1 className="">Your mark : {mark}</h1>
-                        <h1 className=""> Assignment mark : {ass_marks}</h1>
+                        <h1 className="md:text-4xl lg:text-base">Your mark : {mark}</h1>
+                        <h1 className="md:text-4xl lg:text-base"> Assignment mark : {ass_marks}</h1>
                     </div>
 
-                    <button className="btn bg-orange-600 text-white text-xl ml-10" onClick={test}>Give mark</button>
+                    <div className='flex justify-center'>
+                        <button className="btn bg-orange-600 text-white text-xl md:px-20 lg:p-2" onClick={test}>Give mark</button>
+                    </div>
 
                 </div>
             </div>
@@ -118,8 +112,9 @@ const PendingCard = ({ Assign }) => {
                 </div>
             </dialog>
 
-            <dialog id="preview_modal" className="modal">
-                <div className="p-10 m-24 bg-white w-2/3 rounded-3xl relative">
+            <dialog id="preview_modal" className="modal p-5">
+                <div className="modal-box">
+                {/* w-full lg:p-10 lg:m-24 bg-white lg:w-2/3 lg:rounded-3xl relative*/}
                     <form method="dialog">
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
@@ -128,7 +123,7 @@ const PendingCard = ({ Assign }) => {
                         <h1 className='text-2xl font-bold text-center'>Assingment Doc Preview</h1>
                         <hr className='bg-base-300 my-4' />
                         <div>
-                            <iframe className='w-full min-h-screen' src={linkSubmit} title={`PDF Preview`} height="100%" style={{ border: 'none' }} />
+                            <iframe className='w-full h-screen' src={linkSubmit} title={`PDF Preview`} height="100%" style={{ border: 'none' }} />
                         </div>
                     </div>
 

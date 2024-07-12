@@ -19,7 +19,6 @@ const AssignmentDetails = () => {
     useEffect(() => {
         axios.get(`http://localhost:5000/MyAssignList/${user?.email}`, { withCredentials: true })
             .then(data => {
-                // console.log(data.data)
                 if (data.data) {
                     for (let i of data.data) {
                         // console.log(i)
@@ -31,7 +30,6 @@ const AssignmentDetails = () => {
                 }
             })
     }, [])
-
 
     const handleSubmitAssignment = (e) => {
         e.preventDefault()
@@ -69,20 +67,16 @@ const AssignmentDetails = () => {
             })
     }
 
-
     const handleModal = () => {
         document.getElementById('my_modal_3').showModal()
     }
 
 
-
-
-
     return (
         <div>
-            <div className='bg-base-200 my-20 p-24 flex items-center'>
-                <div className='grid grid-cols-2 gap-10'>
-                    <div className="grid grid-cols-1 card bg-base-100 shadow-xl">
+            <div className='bg-base-200 lg:p-24 flex flex-col items-center'>
+                <div className='grid lg:grid-cols-2 gap-3 lg:gap-10'>
+                    <div className="grid grid-cols-1 m-3 card bg-base-100 shadow-xl">
                         <div className="card-body">
                             <h1 className='card-title text-5xl font-bold'>{title}</h1>
                             <p className='my-3 text-xl'>{description}</p>
@@ -118,9 +112,8 @@ const AssignmentDetails = () => {
                         </div>
                     </div>
 
-
-                    <div className='grid grid-cols-1'>
-                        <img className='w-full' src={image_url} alt="" />
+                    <div className='grid grid-cols-1 m-3'>
+                        <img className='w-full lg:h-full' src={image_url} alt="" />
                     </div>
                 </div>
             </div>
