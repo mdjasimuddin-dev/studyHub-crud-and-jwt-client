@@ -21,7 +21,7 @@ const Navbar = () => {
         {user ?
             <>
                 <li><NavLink to='/createTask'>Create Assignment</NavLink></li>
-                <li><NavLink to={`/pendingTask/${user?.email}`}>Pending Assignment</NavLink></li>
+                <li><NavLink to={`/pendingTask`}>Pending Assignment</NavLink></li>
             </>
             :
             <>

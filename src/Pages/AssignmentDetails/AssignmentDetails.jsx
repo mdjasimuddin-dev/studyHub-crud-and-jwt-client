@@ -3,6 +3,7 @@ import { useLoaderData, useNavigate } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 const AssignmentDetails = () => {
 
@@ -10,28 +11,26 @@ const AssignmentDetails = () => {
     const { user } = useAuth()
     const navigate = useNavigate()
 
-    const {_id, title, description, marks, ass_lavel, selectDate, image_url } = assignDetails
-    console.log(_id, )
-    
+    const { _id, title, description, marks, ass_lavel, selectDate, image_url } = assignDetails
+    // console.log(_id, )
+
     const [isDisabled, setIsDisabled] = useState(false);
-    console.log(find)
 
-
-    useEffect(()=>{
-        axios.get(`http://localhost:5000/MyAssignList/${user?.email}`, {withCredentials : true})
-        .then(data => {
-            console.log(data.data)
-            if(data.data){
-                for(let i of data.data){
-                    console.log(i)
-                    if(i.ass_id === _id){
-                        console.log('data already submitted')
-                        setIsDisabled(true);
+    useEffect(() => {
+        axios.get(`http://localhost:5000/MyAssignList/${user?.email}`, { withCredentials: true })
+            .then(data => {
+                // console.log(data.data)
+                if (data.data) {
+                    for (let i of data.data) {
+                        // console.log(i)
+                        if (i.ass_id === _id) {
+                            console.log('Assignment already submitted')
+                            setIsDisabled(true);
+                        }
                     }
                 }
-            }
-        })
-    },[])
+            })
+    }, [])
 
 
     const handleSubmitAssignment = (e) => {
@@ -59,7 +58,14 @@ const AssignmentDetails = () => {
         axios.post(`http://localhost:5000/assingment`, submitData, { withCredentials: true })
             .then(data => {
                 console.log(data.data)
-                navigate("/myAssignment")
+                if (data.data.insertedId) {
+                    Swal.fire({
+                        title: "Successfull",
+                        text: "Assignment submit Successfully.",
+                        icon: "success"
+                    });
+                    navigate("/myAssignment")
+                }
             })
     }
 

@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useAuth from '../../Hooks/useAuth';
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 const CreateAssignmentPage = () => {
 
@@ -30,9 +31,16 @@ const CreateAssignmentPage = () => {
         const assignmentData = { title, description, marks, image_url, user_email, ass_lavel, selectDate }
         console.log(assignmentData)
 
-        axios.post(`http://localhost:5000/createAssign`, assignmentData, {withCredentials : true} )
+        axios.post(`http://localhost:5000/createAssign`, assignmentData, { withCredentials: true })
             .then(data => {
                 console.log(data.data)
+                if (data.data.insertedId) {
+                    Swal.fire({
+                        title: "Successfull",
+                        text: "New Assignment Added Successfully.",
+                        icon: "success"
+                    });
+                }
             })
     };
 

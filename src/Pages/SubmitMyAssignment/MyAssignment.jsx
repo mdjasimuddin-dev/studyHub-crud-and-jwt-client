@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-// import { Link, useLoaderData } from 'react-router-dom';
 import { useEffect } from 'react';
 // import Swal from 'sweetalert2';
 import useAuth from '../../Hooks/useAuth';
-import PreviewDoc from '../../Component/PreviewDoc/PreviewDoc';
+import { FaEye } from "react-icons/fa";
 
 const MyAssignment = () => {
 
@@ -16,7 +14,7 @@ const MyAssignment = () => {
         fetch(`http://localhost:5000/MyAssignList/${user?.email}`, { credentials: 'include' })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 setAssign(data)
             })
     }, [user])
@@ -56,7 +54,7 @@ const MyAssignment = () => {
                                     <h1 className=""> Assignment mark : {item.ass_marks}</h1>
                                 </div>
                                 <div className='flex items-center'>
-                                    <button onClick={()=>handleDocPreview(item.linkSubmit)} className='justify-center btn bg-blue-500 text-white mr-4'>Preview</button>
+                                    <button onClick={()=>handleDocPreview(item.linkSubmit)} className='justify-center btn bg-blue-500 text-white mr-4'><span><FaEye /></span>Preview</button>
                                     <h1 className="bg-orange-400 p-2 flex-grow">feedback : {item.feedback}</h1>
                                 </div>
                             </div>
@@ -70,7 +68,7 @@ const MyAssignment = () => {
 
 
             <dialog id="preview_modal" className="modal">
-                <div className="p-10 m-24 bg-white w-2/3 min-h-screen relative">
+                <div className="p-10 m-24 bg-white w-2/3 rounded-3xl relative">
                     <form method="dialog">
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
@@ -80,7 +78,7 @@ const MyAssignment = () => {
                         <hr className='bg-base-300 my-4' />
 
                         <div>
-                            <iframe src={preview} title={`PDF Preview`} width="100%" height="500px" style={{ border: 'none' }}/>
+                            <iframe className='w-full min-h-screen' src={preview} title={`PDF Preview`} height="100%" style={{ border: 'none' }}/>
                         </div>
 
 

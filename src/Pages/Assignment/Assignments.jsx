@@ -5,13 +5,12 @@ import useAuth from '../../Hooks/useAuth';
 
 const Assignments = () => {
     const assignmentall = useLoaderData()
-    // const [assignment, setAssignment] = useState(assignmentall)
-
+    const [assignment, setAssignment] = useState(assignmentall)
     const { user } = useAuth()
 
     const deleteAssignment = (id, userEmail) => {
-        console.log(id)
-        console.log(userEmail)
+        // console.log(id)
+        // console.log(userEmail)
         if (user?.email === userEmail) {
             Swal.fire({
                 title: "Are you sure?",
@@ -36,8 +35,8 @@ const Assignments = () => {
                                 });
                             }
 
-                            // const remaining = assignment.filter(assign => assign._id !== id)
-                            // setAssignment(remaining)
+                            const remaining = assignment.filter(assign => assign._id !== id)
+                            setAssignment(remaining)
                         })
                 }
             })
@@ -55,7 +54,6 @@ const Assignments = () => {
     return (
         <div>
             <h1 className='text-5xl font-bold text-center'>Total Assignment : {assignmentall.length}</h1>
-
             <div>
                 <h1 className='text-2xl font-bold my-2'>Assignmetn lavel</h1>
                 <select className="select select-bordered join-item w-64">
@@ -85,7 +83,7 @@ const Assignments = () => {
                             {/* row 1 */}
                             <div>
                                 {
-                                    assignmentall.map(data =>
+                                    assignment.map(data =>
                                         <tr key={data._id} className='grid grid-cols-8 items-center text-center text-xl'>
                                             <td className='grid grid-cols-1'>
                                                 <div className="flex items-center gap-3">

@@ -10,15 +10,13 @@ const AssignmentUpdate = () => {
 
     const navigate = useNavigate()
     const updateData = useLoaderData()
-    // console.log(updateData)
-
-
     const [startDate, setStartDate] = useState(new Date());
     const [options, setOptions] = useState(" ");
 
+    // console.log(updateData)
+
 
     const selectOptions = (e) => {
-        // console.log(e.target.value)
         setOptions(e.target.value)
     }
 

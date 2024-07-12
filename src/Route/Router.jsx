@@ -38,7 +38,7 @@ const router = createBrowserRouter([
             {
                 path : "/assignments",
                 element : <Assignments/>,
-                loader : () => fetch(`http://localhost:5000/assignments`, {credentials : "include"})
+                loader : () => fetch(`http://localhost:5000/assignments`)
             },
 
             {
@@ -55,7 +55,7 @@ const router = createBrowserRouter([
             {
                 path : "/assignmentUpdate/:id",
                 element : <PrivateRouter><AssignmentUpdate/></PrivateRouter>,
-                loader : ({params}) => (`http://localhost:5000/assignments/${params.id}`, {credentials:"include"})
+                loader : ({params}) => fetch(`http://localhost:5000/assignments/${params.id}`, {credentials:"include"})
             },
 
             {
@@ -63,10 +63,15 @@ const router = createBrowserRouter([
                 element : <PrivateRouter><MyAssignment/></PrivateRouter>
             },
 
+            // {
+            //     path : "/pendingTask/:email",
+            //     element : <PrivateRouter><PendingAssignment/></PrivateRouter>,
+            //     loader : ({params}) => fetch(`http://localhost:5000/pendingList/${params.email}`, {credentials : "include"})
+            // },
             {
-                path : "/pendingTask/:email",
+                path : "/pendingTask",
                 element : <PrivateRouter><PendingAssignment/></PrivateRouter>,
-                loader : ({params}) => fetch(`http://localhost:5000/pendingList/${params.email}`, {credentials : "include"})
+                loader : () => fetch(`http://localhost:5000/pendingList`, {credentials : "include"})
             }
         ]
     }

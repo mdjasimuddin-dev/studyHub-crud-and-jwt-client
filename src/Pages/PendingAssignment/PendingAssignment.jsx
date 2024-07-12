@@ -5,14 +5,7 @@ import PendingCard from "./PendingCard";
 
 const PendingAssignment = () => {
     const AssignData = useLoaderData()
-    console.log(AssignData)
-
-    // const { _id, ass_descriptions, ass_image, ass_label, ass_marks, ass_title, linkSubmit, noteText, status } = AssignData
-    // console.log(ass_marks)
-
-
-    
-
+    // console.log(AssignData)
 
     return (
         <div>
