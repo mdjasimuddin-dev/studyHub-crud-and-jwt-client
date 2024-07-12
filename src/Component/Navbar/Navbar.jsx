@@ -2,7 +2,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { FaUserCircle } from "react-icons/fa";
 import useAuth from '../../Hooks/useAuth';
-import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
 
@@ -11,6 +11,13 @@ const Navbar = () => {
 
     const handleLogout = () => {
         logOut()
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Logout Seccessfull",
+            showConfirmButton: false,
+            timer: 1500
+          });
     }
 
     const links = <>
