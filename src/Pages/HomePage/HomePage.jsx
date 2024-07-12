@@ -17,18 +17,19 @@ const HomePage = () => {
     return (
         <div>
             {/* Banner Section  */}
-            <div className='flex relative border-2'>
+            <div className='m-2 flex relative border-2'>
                 <img className='w-full h-[600px] brightness-50' src="https://i.postimg.cc/vH2jg0tL/pexels-pixabay-207636.jpg" alt="" />
 
                 <div className='absolute space-y-4 flex flex-col justify-center items-center border w-full h-full'>
-                    <h1 className='text-7xl text-white text-center font-bold'>Welcome to <span className="text-orange-600">Study</span>Hub</h1>
-                    <p className="text-white text-3xl">where learning together is easier than ever!</p>
-                    <p className='text-2xl pt-5 text-white w-1/2 text-center'>Create any school college assignment very easily and quickly and show your talent</p>
+                    <h1 className='text-6xl lg:text-7xl text-white text-center font-bold'>Welcome to <span className="text-orange-600">Study</span>Hub</h1>
+                    <p className="text-white text-center p-2 text-xl lg:text-3xl">where learning together is easier than ever!</p>
+                    <p className='lg:text-2xl lg:pt-5 text-white lg:w-1/2 text-center'>Create any school college assignment very easily and quickly and show your talent</p>
 
-                    <div className='flex justify-center gap-5'>
+                    <div className='lg:flex justify-center gap-5 hidden'>
                         <div className=' bg-orange-400 text-white p-4'>
-                            <h1>School Assignment</h1>
-                            <p>Create, Update</p>
+                            <h1>Assignment</h1>
+                            <p>Create, update</p>
+                            <p>Delete, Save</p>
                         </div>
 
                         <div className=' bg-orange-500 text-white p-4'>
@@ -46,14 +47,14 @@ const HomePage = () => {
             </div>
 
 
-            <div className="my-16">
+            <div className="my-6 lg:my-16">
                 <h1 className="text-5xl font-bold text-center ">Feature Section </h1>
                 <p className="text-2xl font-bold text-center mt-4 text-orange-600">All our features at a glance</p>
             </div>
 
 
             {/* feature Section  */}
-            <div className='grid grid-cols-3 gap-10'>
+            <div className='grid grid-cols-2 lg:grid-cols-3 m-2 gap-3 lg:gap-10'>
                 {
                     feature.map((webFeature, index) => <FeatureCard
                         key={index}
@@ -65,17 +66,15 @@ const HomePage = () => {
 
             {/* faq section  */}
 
-
-
-            <div className="my-16">
+            <div className="my-10 lg:my-16">
                 <h1 className="text-5xl font-bold text-center ">Faq Section </h1>
-                <p className="text-2xl font-bold text-center mt-4 text-orange-600">All the questions and answers you want</p>
+                <p className="text-2xl px-2 font-bold text-center mt-4 text-orange-600">All the questions and answers you want</p>
             </div>
 
-            <div className="grid grid-cols-2 p-10 gap-10 bg-[#070F2B] text-white">
+            <div className="grid lg:grid-cols-2 p-4 lg:p-10 gap-10 bg-[#070F2B] text-white">
                 <div className="space-y-5 grid grid-cols-1">
-                    <h1 className="text-7xl font-bold">Most Questions We Answered</h1>
-                    <p className="text-2xl">Explore our FAQ page for comprehensive answers to common queries. Find solutions, troubleshoot, and gain insights into our services and offerings. Your questions, answered with clarity and detail.</p>
+                    <h1 className="text-5xl text-center lg:text-left lg:text-7xl font-bold">Most Questions We Answered</h1>
+                    <p className="text-xl text-center lg:text-left lg:text-2xl">Explore our FAQ page for comprehensive answers to common queries. Find solutions, troubleshoot, and gain insights into our services and offerings. Your questions, answered with clarity and detail.</p>
                 </div>
 
                 <div className="grid grid-cols-1">
@@ -84,9 +83,8 @@ const HomePage = () => {
             </div>
 
             <div>
-                <h1 className="text-4xl font-bold mt-10">Most Asked Question To Us</h1>
-                <div className="grid grid-cols-2 gap-5 mt-5">
-
+                <h1 className="text-2xl text-center lg:text-left lg:text-4xl font-bold mt-10">Most Asked Question To Us</h1>
+                <div className="grid lg:grid-cols-2 gap-5 mt-5">
                     <div className="grid grid-cols-1 join join-vertical w-full">
                         <div className="collapse collapse-arrow join-item border border-base-300">
                             <input type="radio" name="my-accordion-4" defaultChecked />
@@ -144,7 +142,6 @@ const HomePage = () => {
                     </div>
 
                     <div className="grid grid-cols-1 join join-vertical w-full">
-
                         <div className="collapse collapse-arrow join-item border border-base-300">
                             <input type="radio" name="my-accordion-4" defaultChecked />
                             <div className="collapse-title text-xl font-medium">
