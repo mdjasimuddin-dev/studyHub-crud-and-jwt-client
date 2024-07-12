@@ -4,11 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import { updateProfile } from "firebase/auth";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 
 const RegisterPage = () => {
 
-    const { userCreate } = useAuth()
+    const { userCreate, signInGoogle } = useAuth()
     const navigate = useNavigate()
 
 
@@ -25,21 +26,32 @@ const RegisterPage = () => {
 
         if (!Accepted) {
             console.log("Please Accept terms and coditions")
+            Swal.fire({
+                icon: "error",
+                title: "Accept our rules",
+                text: "Please accept terms & conditions!"
+            });
             return
         }
 
         userCreate(email, password)
             .then(result => {
                 const user = result.user;
-                console.log(user)
-                const {data} = axios.post('https://crud-and-jwt-server-nine.vercel.app/jwt', {email : result?.user?.email}, {withCredentials : true})
-                console.log("token",data)
+                // console.log(user)
+                axios.post('https://crud-and-jwt-server-nine.vercel.app/jwt', { email: result?.user?.email }, { withCredentials: true })
                 if (user) {
                     updateProfile(user, {
                         displayName: name
                     })
                         .then(() => {
-                            console.log("profile update done")
+                            // console.log("profile update done")
+                            if(result?.user){
+                                Swal.fire({
+                                    title: "Successfull",
+                                    text: "Profile Create successfull.",
+                                    icon: "success"
+                                });
+                            }
                         })
                         .catch(err => console.log(err))
                     navigate(location.state ? location.pathname : "/")
@@ -48,6 +60,24 @@ const RegisterPage = () => {
             .catch(err => {
                 console.log(err)
             })
+    }
+
+
+    const handleGoogleSingIn = async() => {
+        try {
+            const result = await signInGoogle()
+            await axios.post('https://crud-and-jwt-server-nine.vercel.app/jwt', {email : result?.user?.email}, {withCredentials: true})
+            if(result?.user){
+                Swal.fire({
+                    title: "Successfull",
+                    text: "User login successfull.",
+                    icon: "success"
+                });
+            }
+            navigate('/')
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     // const handleUserCreate = (e) => {
@@ -92,11 +122,11 @@ const RegisterPage = () => {
 
     return (
         <div className=''>
-            <div className="hero min-h-[660px]">
-                <div className="hero-content grid grid-cols-5 gap-10">
+            <div className="lg:min-h-[660px]">
+                <div className="grid grid-cols-1 lg:grid-cols-5 lg:gap-10">
 
                     {/* left sider login options bar  */}
-                    <div className="bg-[#070F2B] text-white min-h-[650px] lg:flex justify-center items-center grid col-span-2 p-5">
+                    <div className="bg-[#070F2B] rounded-lg text-white lg:min-h-[550px] items-center p-5 lg:grid lg:col-span-2">
                         <div className="text-center lg:text-left px-4">
                             <div className='flex items-center justify-center mb-5'>
                                 <img className='h-16 w-16' src="https://i.postimg.cc/J44zYSqz/file.png" alt="" />
@@ -104,21 +134,20 @@ const RegisterPage = () => {
                             </div>
                             <p className="py-5 text-xl text-center">Login using social media to get quick access</p>
 
-                            <Link className="flex items-center my-2 btn bg-red-500 text-white"><FaGoogle /> Login with google</Link>
-
+                            <Link onClick={handleGoogleSingIn} className="flex items-center my-2 btn bg-red-500 text-white"><FaGoogle /> Login with google</Link>
                             <Link className="flex my-2 items-center btn bg-[#282886] text-white"><FaGithub /> Login with github</Link>
-
                             <Link className="flex items-center btn bg-blue-600 text-white"><FaFacebookF /> Login with facebook</Link>
                         </div>
                     </div>
 
                     {/* lright side login input box  */}
-                    <div className='grid col-span-3 bg-base-200 p-10'>
+                    <div className='grid col-span-3 bg-base-200 p-4 lg:p-10'>
                         <div className="text-center">
                             <h1 className="text-4xl font-bold mb-4">Sign up for free!</h1>
+                            <p className="text-xl text-center font-xl">Already have an account? <Link to="/login" className="text-blue-600 text-xl font-bold">login</Link></p>
                         </div>
 
-                        <div className="card shrink-0 bg-base-100 mt-10">
+                        <div className="card shrink-0 bg-white mt-10">
                             <form onSubmit={handleUserCreate} className="card-body">
 
                                 <div className="form-control">
@@ -151,7 +180,7 @@ const RegisterPage = () => {
                                 <div className="form-control mt-6">
                                     <button className="btn bg-orange-600 text-white font-bold text-xl">Sign Up</button>
 
-                                    <p className="text-xl text-center font-xl">Already have an account? <Link to="/login" className="text-blue-600 text-xl font-bold">login</Link></p>
+                                    
                                 </div>
                             </form>
                         </div>
