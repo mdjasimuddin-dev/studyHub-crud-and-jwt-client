@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import FeatureCard from "./FeatureCard/FeatureCard";
 import Footer from "../../Component/Footer/Footer";
 import Blog from "../../Component/Blog";
+import BookCarousel from "../../Component/BookCarousel";
 
 const HomePage = () => {
   const [feature, setFeature] = useState([]);
@@ -36,24 +37,6 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* <div className="flex justify-center gap-5 grid grid-cols-3 mx-">
-        <div className=" bg-orange-400 text-white p-4">
-          <h1>Assignment</h1>
-          <p>Create, update</p>
-          <p>Delete, Save</p>
-        </div>
-
-        <div className=" bg-orange-500 text-white p-4">
-          <h1>School Assignment</h1>
-          <p>Create, Update</p>
-        </div>
-
-        <div className=" bg-orange-600 text-white p-4">
-          <h1>School Assignment</h1>
-          <p>Create, Update</p>
-        </div>
-      </div> */}
-
       <Blog />
 
       <div className="my-6 lg:my-16">
@@ -69,6 +52,8 @@ const HomePage = () => {
           <FeatureCard key={index} Feature={webFeature}></FeatureCard>
         ))}
       </div>
+
+      <BookCarousel />
 
       {/* faq section  */}
 

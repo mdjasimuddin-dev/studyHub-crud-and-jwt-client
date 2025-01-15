@@ -5,9 +5,12 @@ const Blog = () => {
     <div>
       <section className="bg-white dark:bg-gray-900">
         <div className="container px-6 py-10">
-          <h1 className="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">
-            {/* From the blog */}
-          </h1>
+          <div className="my-6 lg:my-16">
+            <h1 className="text-5xl font-bold text-center ">Get Started</h1>
+            <p className="text-2xl font-bold text-center mt-4 text-orange-600">
+              You choose right website
+            </p>
+          </div>
 
           <div className="mt-8 lg:-mx-6 lg:flex lg:items-center">
             <img
