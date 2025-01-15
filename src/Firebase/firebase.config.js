@@ -6,12 +6,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDLzMbr6pQuLHFXj29Km-bu8Tcb3oB1MT8",
-  authDomain: "crud-and-jwt-project.firebaseapp.com",
-  projectId: "crud-and-jwt-project",
-  storageBucket: "crud-and-jwt-project.appspot.com",
-  messagingSenderId: "218103418658",
-  appId: "1:218103418658:web:041f485a8fbe609c9a1f7b"
+  apiKey:"AIzaSyDLzMbr6pQuLHFXj29Km-bu8Tcb3oB1MT8",
+  authDomain:"crud-and-jwt-project.firebaseapp.com",
+  projectId:"crud-and-jwt-project",
+  storageBucket:"crud-and-jwt-project.appspot.com",
+  messagingSenderId:"218103418658",
+  appId:"1:218103418658:web:041f485a8fbe609c9a1f7b"
 };
 
 // Initialize Firebase

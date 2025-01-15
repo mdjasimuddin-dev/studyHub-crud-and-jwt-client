@@ -67,8 +67,9 @@ const MyAssignment = () => {
             </div>
 
 
-            <dialog id="preview_modal" className="modal">
-                <div className="p-10 m-24 bg-white w-2/3 rounded-3xl relative">
+            <dialog id="preview_modal" className="modal p-5">
+                <div className="modal-box">
+                {/* w-full lg:p-10 lg:m-24 bg-white lg:w-2/3 lg:rounded-3xl relative*/}
                     <form method="dialog">
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
@@ -76,13 +77,11 @@ const MyAssignment = () => {
                     <div>
                         <h1 className='text-2xl font-bold text-center'>Assingment Doc Preview</h1>
                         <hr className='bg-base-300 my-4' />
-
                         <div>
-                            <iframe className='w-full min-h-screen' src={preview} title={`PDF Preview`} height="100%" style={{ border: 'none' }}/>
+                            <iframe className='w-full h-screen' src={preview} title={`PDF Preview`} height="100%" style={{ border: 'none' }} />
                         </div>
-
-
                     </div>
+
                 </div>
             </dialog>
 

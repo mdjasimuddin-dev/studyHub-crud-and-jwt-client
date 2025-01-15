@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaEye } from "react-icons/fa";
+import Swal from 'sweetalert2';
 
 const PendingCard = ({ Assign }) => {
 
@@ -28,6 +29,12 @@ const PendingCard = ({ Assign }) => {
         axios.put(`https://crud-and-jwt-server-nine.vercel.app/updateStatus/${assignId}`, assignUpdate, { withCredentials: true })
             .then(data => {
                 console.log(data.data)
+                Swal.fire({
+                    icon: "success",
+                    title: "Mark assign complete",
+                    text: "Examinee got mark and change status",
+                    timer: 1500
+                  });
             })
             .catch((error) => {
                 console.log(error)
