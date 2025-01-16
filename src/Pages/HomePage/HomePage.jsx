@@ -3,6 +3,7 @@ import FeatureCard from "./FeatureCard/FeatureCard";
 import Footer from "../../Component/Footer/Footer";
 import Blog from "../../Component/Blog";
 import BookCarousel from "../../Component/BookCarousel";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [feature, setFeature] = useState([]);
@@ -31,9 +32,9 @@ const HomePage = () => {
             supportive community.
           </p>
 
-          <button className="btn w-full md:w-auto bg-orange-500 text-white">
+          <Link to='/assignments' className="btn w-full md:w-auto bg-orange-500 text-white">
             View Assignment
-          </button>
+          </Link>
         </div>
       </div>
 

@@ -1,120 +1,242 @@
-import {useState } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
-import Swal from 'sweetalert2'
-import useAuth from '../../Hooks/useAuth';
-import { MdDelete } from "react-icons/md";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
+// import { MdDelete } from "react-icons/md";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { FaEye } from "react-icons/fa";
 
 const Assignments = () => {
-    const assignmentall = useLoaderData()
-    const [assignment, setAssignment] = useState(assignmentall)
-    const { user } = useAuth()
+  const [assignments, setAssignments] = useState([]);
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const [filter, setFilter] = useState("");
 
-    const deleteAssignment = (id, userEmail) => {
-        // console.log(id)
-        // console.log(userEmail)
-        if (user?.email === userEmail) {
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch(`https://crud-and-jwt-server-nine.vercel.app/deleteAssign/${id}`, {
-                        method: 'delete'
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.deleteCount > 0) {
-                                Swal.fire({
-                                    title: "Deleted!",
-                                    text: "Your file has been deleted.",
-                                    icon: "success"
-                                });
-                            }
+  useEffect(() => {
+    const getData = async () => {
+      const { data } = await axiosSecure(`/assignments?filter=${filter}`);
+      setAssignments(data);
+    };
+    getData();
+  }, [filter]);
 
-                            const remaining = assignment.filter(assign => assign._id !== id)
-                            setAssignment(remaining)
-                        })
-                }
-            })
-        } else {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Only the user who created it can delete it.!"
+  console.log(assignments);
+
+  const handleDelete = async (id, user_email) => {
+    console.log(id, user_email);
+
+    try {
+      if (user?.email === user_email) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axiosSecure.delete(`/deleteAssign/${id}`).then((res) => {
+              if (res.data.deletedCount > 0) {
+                Swal.fire({
+                  title: "Deleted!",
+                  text: "Your file has been deleted.",
+                  icon: "success",
+                });
+              }
             });
-        }
-
+          }
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Only the user who created it can delete it.!",
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
+  };
 
+  // const handleAssignmentFilter = (value) => {
+  //   console.log(value);
+  //   setFilter();
+  // };
 
-    return (
-        <div className='my-10'>
-            <h1 className=' text-3xl lg:text-5xl font-bold text-center'>Total Assignment : {assignmentall.length}</h1>
-            <hr className='h-1 bg-base-300 m-4' />
-            <div className='flex my-4'>
-                <h1 className='lg:text-2xl font-bold m-2'>Assignmetn lavel </h1>
-                <select className="select select-bordered join-item lg:w-64">
-                    <option disabled selected>Filter</option>
-                    <option value="easy">Easy</option>
-                    <option value="medium">Mideum</option>
-                    <option value="hard">Hard</option>
-                </select>
-            </div>
+  console.log(filter);
 
-            <div className='lg:my-10'>
-                <div className="overflow-x-auto">
-                    <table className="table">
-                        {/* head */}
-                        <thead>
-                            <tr className='text-xl grid grid-cols-8 text-center bg-slate-300 text-black'>
-                                <th className='lg:grid lg:grid-cols-1'>Picture</th>
-                                <th className='lg:grid lg:grid-cols-1 lg:col-span-2'>Title</th>
-                                <th className='lg:grid lg:grid-cols-1'>Lavel</th>
-                                <th className='lg:grid lg:grid-cols-1'>Marks</th>
-                                <th className='lg:grid lg:grid-cols-1'>Delete</th>
-                                <th className='lg:grid lg:grid-cols-1'>Update</th>
-                                <th className='lg:grid lg:grid-cols-1'>View</th>
-                            </tr>
-                        </thead>
-                        <tbody className='lg:my-10'>
-                            {/* row 1 */}
-                            <div>
-                                {
-                                    assignment.map(data =>
-                                        <tr key={data._id} className='lg:grid lg:grid-cols-8 items-center text-center lg:text-xl'>
-                                            <td className='lg:grid lg:grid-cols-1'>
-                                                <div className="items-center gap-3">
-                                                    <img src={data.image_url} alt="image" />
-                                                </div>
-                                            </td>
+  return (
+    <div className="my-10">
+      <h1 className="text-base lg:text-5xl font-bold text-center">
+        Total Assignment : {assignments.length}
+      </h1>
+      <hr className="h-1 bg-base-300 m-4" />
 
-                                            <td className='lg:grid lg:col-span-2'> {data.title}</td>
-                                            <td className='lg:grid lg:grid-cols-1'>{data.ass_lavel}</td>
-                                            <td className='lg:grid lg:grid-cols-1'>{data.marks}</td>
-                                            <th className='lg:grid lg:grid-cols-1'>
-                                                <Link to={`/assignmentsDetails/${data._id}`} className="btn btn-ghost bg-green-600 text-white">View</Link>
-                                            </th>
-                                            <th className='lg:grid lg:grid-cols-1'>
-                                                <Link to={`/assignmentUpdate/${data._id}`} className="btn btn-ghost bg-orange-600 text-white ">Update</Link>
-                                            </th>
-                                            <th className='lg:grid lg:grid-cols-1'>
-                                                <button onClick={() => deleteAssignment(data._id, data.user_email)} className="btn btn-ghost bg-red-600 text-white"> Delete</button>
-                                            </th>
-                                        </tr>
-                                    )
-                                }
-                            </div>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+      <div className="flex my-4">
+        <h1 className="text-base lg:text-2xl font-bold m-2">
+          Assignment filter{" "}
+        </h1>
+        <select
+          onChange={(e) => setFilter(e.target.value)}
+          value={filter}
+          className="select select-bordered text-base join-item lg:w-32"
+        >
+          <option value="">All</option>
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+        </select>
+      </div>
+
+      <div className="lg:my-10">
+        {/* new table  */}
+        <div className="overflow-x-auto border border-gray-200  md:rounded-lg">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500"
+                >
+                  <div className="flex items-center gap-x-3">Image</div>
+                </th>
+
+                <th
+                  scope="col"
+                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
+                >
+                  <span>Title</span>
+                </th>
+
+                <th
+                  scope="col"
+                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
+                >
+                  Laval
+                </th>
+
+                <th
+                  scope="col"
+                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
+                >
+                  View
+                </th>
+
+                <th className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
+                  Edit
+                </th>
+
+                <th className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
+                  Delete
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200 ">
+              {assignments.map((assignment) => (
+                <tr key={assignment._id}>
+                  <td>
+                    <img
+                      src={assignment.image_url}
+                      className="w-20 h-full"
+                      alt=""
+                    />
+                  </td>
+
+                  <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                    {assignment.title}
+                  </td>
+
+                  <td className="px-4 py-4 text-sm whitespace-nowrap">
+                    <div className="flex items-center gap-x-2">
+                      <p
+                        className={`px-3 py-1 ${
+                          assignment.ass_laval === "Easy" &&
+                          " text-emerald-500 bg-emerald-100/60"
+                        } ${
+                          assignment.ass_laval === "Medium" &&
+                          "text-blue-500 bg-blue-100/60"
+                        } ${
+                          assignment.ass_laval === "Hard" &&
+                          "text-pink-500 bg-pink-100/60"
+                        } text-xs  rounded-full`}
+                      >
+                        {assignment.ass_laval}
+                      </p>
+                    </div>
+                  </td>
+
+                  <td className="px-4 py-4 text-sm text-gray-500 flex  whitespace-nowrap">
+                    <Link
+                      to={`/assignmentsDetails/${assignment._id}`}
+                      className="text-gray-500 flex gap-x-2 transition-colors duration-200   hover:text-yellow-500 focus:outline-none"
+                    >
+                      <button>
+                        <FaEye size={20} className="hover:text-red-200" />
+                      </button>
+                      <p className="hidden lg:flex">View</p>
+                    </Link>
+                  </td>
+
+                  <td className="px-4 py-4 text-sm whitespace-nowrap">
+                    <div className=" items-center ">
+                      <Link
+                        to={`/assignmentUpdate/${assignment._id}`}
+                        className="text-gray-500 flex gap-x-2 transition-colors duration-200   hover:text-yellow-500 focus:outline-none"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="w-5 h-5"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                          />
+                        </svg>
+                        <p className="hidden lg:flex">Edit</p>
+                      </Link>
+                    </div>
+                  </td>
+
+                  <td className="">
+                    <button
+                      onClick={() =>
+                        handleDelete(assignment._id, assignment.user_email)
+                      }
+                      className="text-gray-500 flex gap-x-2 transition-colors duration-200   hover:text-red-500 focus:outline-none"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="w-5 h-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                        />
+                      </svg>
+
+                      <p className="hidden lg:flex">Remove</p>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Assignments;

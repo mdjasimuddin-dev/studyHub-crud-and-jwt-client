@@ -1,0 +1,44 @@
+[
+    {
+        "ass_laval": "Easy",
+        "image_url": "https://i.postimg.cc/SQfNZvhL/event-calender-and-remainder.jpg",
+        "marks": "100",
+        "title": "Assignment Title here - 1",
+        "user_email": "mjunachole97@gmail.com"
+    },
+    {
+        "ass_laval": "Medium",
+        "image_url": "https://i.postimg.cc/SQfNZvhL/event-calender-and-remainder.jpg",
+        "marks": "100",
+        "title": "Assignment Title here - 2",
+        "user_email": "mjunachole97@gmail.com"
+    },
+    {
+        "ass_laval": "Hard",
+        "image_url": "https://i.postimg.cc/SQfNZvhL/event-calender-and-remainder.jpg",
+        "marks": "100",
+        "title": "Assignment Title here - 3",
+        "user_email": "mjunachole11@gmail.com"
+    },
+    {
+        "ass_laval": "Easy",
+        "image_url": "https://i.postimg.cc/SQfNZvhL/event-calender-and-remainder.jpg",
+        "marks": "100",
+        "title": "Assignment Title here - 4",
+        "user_email": "mjunachole11@gmail.com"
+    },
+    {
+        "ass_laval": "Hard",
+        "image_url": "https://i.postimg.cc/SQfNZvhL/event-calender-and-remainder.jpg",
+        "marks": "100",
+        "title": "Assignment Title here - 5",
+        "user_email": "mjunachole97@gmail.com"
+    },
+    {
+        "ass_laval": "Medium",
+        "image_url": "https://i.postimg.cc/SQfNZvhL/event-calender-and-remainder.jpg",
+        "marks": "100",
+        "title": "Assignment Title here - 6",
+        "user_email": "mjunachole11@gmail.com"
+    }
+]

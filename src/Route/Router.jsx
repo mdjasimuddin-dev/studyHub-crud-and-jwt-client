@@ -36,8 +36,6 @@ const router = createBrowserRouter([
       {
         path: "/assignments",
         element: <Assignments />,
-        loader: () =>
-          fetch(`https://crud-and-jwt-server-nine.vercel.app/assignments`),
       },
 
       {
