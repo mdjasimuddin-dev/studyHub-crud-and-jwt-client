@@ -1,63 +1,6 @@
-import { useEffect, useState } from "react";
-import FeatureCard from "./FeatureCard/FeatureCard";
-import Footer from "../../Component/Footer/Footer";
-import Blog from "../../Component/Blog";
-import BookCarousel from "../../Component/BookCarousel";
-import { Link } from "react-router-dom";
-
-const HomePage = () => {
-  const [feature, setFeature] = useState([]);
-
-  useEffect(() => {
-    fetch("Feature.json")
-      .then((res) => res.json())
-      .then((data) => setFeature(data));
-  }, []);
-
+const Faq = () => {
   return (
     <div>
-      {/* Banner Section  */}
-      <div
-        className={`bg-[url("https://i.postimg.cc/vH2jg0tL/pexels-pixabay-207636.jpg")] flex justify-center bg-cover p-2 w-full md:h-[500px]`}
-      >
-        <div className="flex flex-col justify-center items-center md:w-1/2 space-y-3">
-          <h1 className="text-6xl lg:text-7xl text-white text-center font-bold">
-            Welcome to <span className="text-orange-600">Study</span>Hub
-          </h1>
-
-          <p className="text-white md:text-center p-2 text-xl mx-auto text-justify">
-            where learning together is easier than ever! With StudyHub Online
-            Group Study, learning is no longer a solo journey. Experience the
-            power of collective knowledge and stay motivated by studying with a
-            supportive community.
-          </p>
-
-          <Link to='/assignments' className="btn w-full md:w-auto bg-orange-500 text-white">
-            View Assignment
-          </Link>
-        </div>
-      </div>
-
-      <Blog />
-
-      <div className="my-6 lg:my-16">
-        <h1 className="text-5xl font-bold text-center ">Feature Section </h1>
-        <p className="text-2xl font-bold text-center mt-4 text-orange-600">
-          All our features at a glance
-        </p>
-      </div>
-
-      {/* feature Section  */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 m-2 gap-3 lg:gap-10">
-        {feature.map((webFeature, index) => (
-          <FeatureCard key={index} Feature={webFeature}></FeatureCard>
-        ))}
-      </div>
-
-      <BookCarousel />
-
-      {/* faq section  */}
-
       <div className="my-10 lg:my-16">
         <h1 className="text-5xl font-bold text-center ">Faq Section </h1>
         <p className="text-2xl px-2 font-bold text-center mt-4 text-orange-600">
@@ -233,13 +176,8 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-
-      {/* Footer Sections  */}
-      <div className="my-16">
-        <Footer />
-      </div>
     </div>
   );
 };
 
-export default HomePage;
+export default Faq;

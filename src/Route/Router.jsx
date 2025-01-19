@@ -1,16 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "./../Root/Root";
-import ErrorPage from "./../Pages/ErrorPage/ErrorPage";
-import HomePage from "./../Pages/HomePage/HomePage";
 import LoginPage from "../Pages/Authentication/LoginPage";
 import RegisterPage from "../Pages/Authentication/RegisterPage";
-import CreateAssignmentPage from "./../Pages/CreateAssignment/CreateAssignmentPage";
-import Assignments from "../Pages/Assignment/Assignments";
-import AssignmentDetails from "../Pages/AssignmentDetails/AssignmentDetails";
-import AssignmentUpdate from "../Pages/AssignmentUpdate/AssignmentUpdate";
-import MyAssignment from "../Pages/SubmitMyAssignment/MyAssignment";
-import PendingAssignment from "../Pages/PendingAssignment/PendingAssignment";
 import PrivateRouter from "./PrivateRouter";
+import HomePage from "../Pages/HomePage";
+import Assignments from "../Pages/Assignments";
+import AssignmentDetails from "../Pages/AssignmentDetails";
+import CreateAssignmentPage from "../Pages/CreateAssignment";
+import MyAssignment from "../Pages/MyAssignment";
+import PendingAssignment from "../Pages/PendingAssignment/PendingAssignment";
+import ErrorPage from "../Pages/ErrorPage";
+import UpdateAssignment from "../Pages/UpdateAssignment";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        index: true,
         element: <HomePage />,
       },
 
@@ -46,10 +46,9 @@ const router = createBrowserRouter([
           </PrivateRouter>
         ),
         loader: ({ params }) =>
-          fetch(
-            `https://crud-and-jwt-server-nine.vercel.app/assignments/${params.id}`,
-            { credentials: "include" }
-          ),
+          fetch(`${import.meta.env.VITE_APP_URL}/assignments/${params.id}`, {
+            credentials: "include",
+          }),
       },
 
       {
@@ -62,17 +61,17 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/assignmentUpdate/:id",
+        path: "/updateTask/:id",
         element: (
           <PrivateRouter>
-            <AssignmentUpdate />
+            <UpdateAssignment />
           </PrivateRouter>
         ),
+
         loader: ({ params }) =>
-          fetch(
-            `https://crud-and-jwt-server-nine.vercel.app/assignments/${params.id}`,
-            { credentials: "include" }
-          ),
+          fetch(`${import.meta.env.VITE_APP_URL}/assignments/${params.id}`, {
+            credentials: "include",
+          }),
       },
 
       {

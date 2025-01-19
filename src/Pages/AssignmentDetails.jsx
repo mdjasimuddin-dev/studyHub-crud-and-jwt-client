@@ -1,6 +1,6 @@
 
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import useAuth from '../../Hooks/useAuth';
+import useAuth from '../Hooks/useAuth';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';

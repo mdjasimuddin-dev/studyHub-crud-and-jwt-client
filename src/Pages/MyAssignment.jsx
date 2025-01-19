@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 // import Swal from 'sweetalert2';
-import useAuth from '../../Hooks/useAuth';
+import useAuth from '../Hooks/useAuth';
 import { FaEye } from "react-icons/fa";
 
 const MyAssignment = () => {
