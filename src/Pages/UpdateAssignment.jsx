@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import axios from "axios";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import useAuth from "../Hooks/useAuth";
 
 const UpdateAssignment = () => {
+  const jobData = useLoaderData();
+
+  console.log(jobData);
+  
   const { _id, ass_laval, title, description, marks, image_url } =
     useLoaderData();
 

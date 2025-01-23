@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../Hooks/useAuth";
-// import { MdDelete } from "react-icons/md";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { FaEye } from "react-icons/fa";
 
@@ -17,18 +16,18 @@ const Assignments = () => {
   }, [filter]);
 
   const getData = async () => {
-    const { data } = await axiosSecure(`/assignments?filter=${filter}`);
+    const { data } = await axiosSecure.get(`/assignments?filter=${filter}`);
     console.log(data);
     setAssignments(data);
   };
 
   console.log(assignments);
 
-  const handleDelete = async (id, ass_owner) => {
-    console.log(id, ass_owner);
+  const handleDelete = async (id, owner_email) => {
+    console.log(id, owner_email);
 
     try {
-      if (user?.email === ass_owner) {
+      if (user?.email === owner_email) {
         Swal.fire({
           title: "Are you sure?",
           text: "You won't be able to revert this!",
@@ -59,17 +58,11 @@ const Assignments = () => {
           text: "Only the user who created it can delete it.!",
         });
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
+      return err;
     }
   };
-
-  // const handleAssignmentFilter = (value) => {
-  //   console.log(value);
-  //   setFilter();
-  // };
-
-  console.log(filter);
 
   return (
     <div className="my-10">
@@ -184,7 +177,7 @@ const Assignments = () => {
                 {/* assignment details  */}
                 <td className="px-4 py-4 text-sm text-gray-500 flex  whitespace-nowrap">
                   <Link
-                    to={`/assignmentsDetails/${assignment._id}`}
+                    to={`/assignment-details/${assignment._id}`}
                     className="text-gray-500 flex gap-x-2 transition-colors duration-200   hover:text-yellow-500 focus:outline-none"
                   >
                     <button>
@@ -220,11 +213,14 @@ const Assignments = () => {
                   </div>
                 </td>
 
-                {/* assignment details  */}
+                {/* assignment delete  */}
                 <td className="">
                   <button
                     onClick={() =>
-                      handleDelete(assignment._id, assignment.ass_owner)
+                      handleDelete(
+                        assignment._id,
+                        assignment.creator.owner_email
+                      )
                     }
                     className="text-gray-500 flex gap-x-2 transition-colors duration-200   hover:text-red-500 focus:outline-none"
                   >

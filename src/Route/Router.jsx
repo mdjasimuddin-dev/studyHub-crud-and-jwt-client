@@ -39,14 +39,14 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/assignmentsDetails/:id",
+        path: "/assignment-details/:id",
         element: (
           <PrivateRouter>
             <AssignmentDetails />
           </PrivateRouter>
         ),
         loader: ({ params }) =>
-          fetch(`${import.meta.env.VITE_APP_URL}/assignments/${params.id}`, {
+          fetch(`${import.meta.env.VITE_APP_URL}/assignment/${params.id}`, {
             credentials: "include",
           }),
       },
@@ -69,7 +69,7 @@ const router = createBrowserRouter([
         ),
 
         loader: ({ params }) =>
-          fetch(`${import.meta.env.VITE_APP_URL}/assignments/${params.id}`, {
+          fetch(`${import.meta.env.VITE_APP_URL}/assignment/${params.id}`, {
             credentials: "include",
           }),
       },

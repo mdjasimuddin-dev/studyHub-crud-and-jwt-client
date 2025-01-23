@@ -31,9 +31,13 @@ const CreateAssignment = () => {
       description,
       marks,
       image_url,
-      ass_owner,
       ass_laval,
       create_date,
+      creator: {
+        ass_owner: user?.displayName,
+        owner_email: ass_owner,
+        owner_img: user?.photoURL,
+      },
     };
     console.log(assignmentData);
 
