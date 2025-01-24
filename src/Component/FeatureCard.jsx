@@ -1,7 +1,7 @@
-import React from 'react';
+
 
 const FeatureCard = ({Feature}) => {
-    const {title, imageURL, description} = Feature
+    const {title, imageURL} = Feature
     return (
         <div className='border-2 bg-base-200 p-1 md:p-4'>
             <img className='rounded-xl lg:h-48 w-full' src={imageURL} alt="" />
